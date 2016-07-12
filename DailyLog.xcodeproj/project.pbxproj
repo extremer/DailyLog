@@ -1,0 +1,538 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		45AC90681D24E7A600751E31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90671D24E7A600751E31 /* AppDelegate.swift */; };
+		45AC906A1D24E7A600751E31 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90691D24E7A600751E31 /* ViewController.swift */; };
+		45AC906D1D24E7A600751E31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45AC906B1D24E7A600751E31 /* Main.storyboard */; };
+		45AC906F1D24E7A600751E31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45AC906E1D24E7A600751E31 /* Assets.xcassets */; };
+		45AC90721D24E7A600751E31 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45AC90701D24E7A600751E31 /* LaunchScreen.storyboard */; };
+		45AC907D1D24E7A600751E31 /* DailyLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC907C1D24E7A600751E31 /* DailyLogTests.swift */; };
+		45AC90881D24E7A600751E31 /* DailyLogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90871D24E7A600751E31 /* DailyLogUITests.swift */; };
+		45AC90961D2901FA00751E31 /* LogListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90951D2901FA00751E31 /* LogListViewController.swift */; };
+		45AC90981D29050F00751E31 /* LogListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90971D29050F00751E31 /* LogListTableViewCell.swift */; };
+		45AC909A1D290EDF00751E31 /* DailyLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90991D290EDF00751E31 /* DailyLog.swift */; };
+		45AE738D1D2CB23500BF0C1D /* LogInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE738C1D2CB23500BF0C1D /* LogInfoCell.swift */; };
+		45F9CE101D332CCD004657A7 /* ColorSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F9CE0F1D332CCD004657A7 /* ColorSelectionTableViewController.swift */; };
+		45F9CE121D33314C004657A7 /* ColorSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F9CE111D33314C004657A7 /* ColorSelectionTableViewCell.swift */; };
+		45F9CE141D3335A0004657A7 /* color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F9CE131D3335A0004657A7 /* color.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		45AC90791D24E7A600751E31 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 45AC905C1D24E7A600751E31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 45AC90631D24E7A600751E31;
+			remoteInfo = DailyLog;
+		};
+		45AC90841D24E7A600751E31 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 45AC905C1D24E7A600751E31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 45AC90631D24E7A600751E31;
+			remoteInfo = DailyLog;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		45AC90641D24E7A600751E31 /* DailyLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		45AC90671D24E7A600751E31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		45AC90691D24E7A600751E31 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		45AC906C1D24E7A600751E31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		45AC906E1D24E7A600751E31 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		45AC90711D24E7A600751E31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		45AC90731D24E7A600751E31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45AC90781D24E7A600751E31 /* DailyLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		45AC907C1D24E7A600751E31 /* DailyLogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogTests.swift; sourceTree = "<group>"; };
+		45AC907E1D24E7A600751E31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45AC90831D24E7A600751E31 /* DailyLogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyLogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		45AC90871D24E7A600751E31 /* DailyLogUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogUITests.swift; sourceTree = "<group>"; };
+		45AC90891D24E7A600751E31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45AC90951D2901FA00751E31 /* LogListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogListViewController.swift; sourceTree = "<group>"; };
+		45AC90971D29050F00751E31 /* LogListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogListTableViewCell.swift; sourceTree = "<group>"; };
+		45AC90991D290EDF00751E31 /* DailyLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyLog.swift; sourceTree = "<group>"; };
+		45AE738C1D2CB23500BF0C1D /* LogInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInfoCell.swift; sourceTree = "<group>"; };
+		45F9CE0F1D332CCD004657A7 /* ColorSelectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSelectionTableViewController.swift; sourceTree = "<group>"; };
+		45F9CE111D33314C004657A7 /* ColorSelectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSelectionTableViewCell.swift; sourceTree = "<group>"; };
+		45F9CE131D3335A0004657A7 /* color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = color.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		45AC90611D24E7A600751E31 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45AC90751D24E7A600751E31 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45AC90801D24E7A600751E31 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		45AC905B1D24E7A600751E31 = {
+			isa = PBXGroup;
+			children = (
+				45AC90661D24E7A600751E31 /* DailyLog */,
+				45AC907B1D24E7A600751E31 /* DailyLogTests */,
+				45AC90861D24E7A600751E31 /* DailyLogUITests */,
+				45AC90651D24E7A600751E31 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		45AC90651D24E7A600751E31 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				45AC90641D24E7A600751E31 /* DailyLog.app */,
+				45AC90781D24E7A600751E31 /* DailyLogTests.xctest */,
+				45AC90831D24E7A600751E31 /* DailyLogUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		45AC90661D24E7A600751E31 /* DailyLog */ = {
+			isa = PBXGroup;
+			children = (
+				45AC90671D24E7A600751E31 /* AppDelegate.swift */,
+				45AC906E1D24E7A600751E31 /* Assets.xcassets */,
+				45AC90701D24E7A600751E31 /* LaunchScreen.storyboard */,
+				45AC90731D24E7A600751E31 /* Info.plist */,
+				45AC906B1D24E7A600751E31 /* Main.storyboard */,
+				45AC90691D24E7A600751E31 /* ViewController.swift */,
+				45AC90951D2901FA00751E31 /* LogListViewController.swift */,
+				45AC90971D29050F00751E31 /* LogListTableViewCell.swift */,
+				45AC90991D290EDF00751E31 /* DailyLog.swift */,
+				45AE738C1D2CB23500BF0C1D /* LogInfoCell.swift */,
+				45F9CE0F1D332CCD004657A7 /* ColorSelectionTableViewController.swift */,
+				45F9CE111D33314C004657A7 /* ColorSelectionTableViewCell.swift */,
+				45F9CE131D3335A0004657A7 /* color.swift */,
+			);
+			path = DailyLog;
+			sourceTree = "<group>";
+		};
+		45AC907B1D24E7A600751E31 /* DailyLogTests */ = {
+			isa = PBXGroup;
+			children = (
+				45AC907C1D24E7A600751E31 /* DailyLogTests.swift */,
+				45AC907E1D24E7A600751E31 /* Info.plist */,
+			);
+			path = DailyLogTests;
+			sourceTree = "<group>";
+		};
+		45AC90861D24E7A600751E31 /* DailyLogUITests */ = {
+			isa = PBXGroup;
+			children = (
+				45AC90871D24E7A600751E31 /* DailyLogUITests.swift */,
+				45AC90891D24E7A600751E31 /* Info.plist */,
+			);
+			path = DailyLogUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		45AC90631D24E7A600751E31 /* DailyLog */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 45AC908C1D24E7A600751E31 /* Build configuration list for PBXNativeTarget "DailyLog" */;
+			buildPhases = (
+				45AC90601D24E7A600751E31 /* Sources */,
+				45AC90611D24E7A600751E31 /* Frameworks */,
+				45AC90621D24E7A600751E31 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DailyLog;
+			productName = DailyLog;
+			productReference = 45AC90641D24E7A600751E31 /* DailyLog.app */;
+			productType = "com.apple.product-type.application";
+		};
+		45AC90771D24E7A600751E31 /* DailyLogTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 45AC908F1D24E7A600751E31 /* Build configuration list for PBXNativeTarget "DailyLogTests" */;
+			buildPhases = (
+				45AC90741D24E7A600751E31 /* Sources */,
+				45AC90751D24E7A600751E31 /* Frameworks */,
+				45AC90761D24E7A600751E31 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				45AC907A1D24E7A600751E31 /* PBXTargetDependency */,
+			);
+			name = DailyLogTests;
+			productName = DailyLogTests;
+			productReference = 45AC90781D24E7A600751E31 /* DailyLogTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		45AC90821D24E7A600751E31 /* DailyLogUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 45AC90921D24E7A600751E31 /* Build configuration list for PBXNativeTarget "DailyLogUITests" */;
+			buildPhases = (
+				45AC907F1D24E7A600751E31 /* Sources */,
+				45AC90801D24E7A600751E31 /* Frameworks */,
+				45AC90811D24E7A600751E31 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				45AC90851D24E7A600751E31 /* PBXTargetDependency */,
+			);
+			name = DailyLogUITests;
+			productName = DailyLogUITests;
+			productReference = 45AC90831D24E7A600751E31 /* DailyLogUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		45AC905C1D24E7A600751E31 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = KangKyungwon;
+				TargetAttributes = {
+					45AC90631D24E7A600751E31 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					45AC90771D24E7A600751E31 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 45AC90631D24E7A600751E31;
+					};
+					45AC90821D24E7A600751E31 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 45AC90631D24E7A600751E31;
+					};
+				};
+			};
+			buildConfigurationList = 45AC905F1D24E7A600751E31 /* Build configuration list for PBXProject "DailyLog" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 45AC905B1D24E7A600751E31;
+			productRefGroup = 45AC90651D24E7A600751E31 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				45AC90631D24E7A600751E31 /* DailyLog */,
+				45AC90771D24E7A600751E31 /* DailyLogTests */,
+				45AC90821D24E7A600751E31 /* DailyLogUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		45AC90621D24E7A600751E31 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45AC90721D24E7A600751E31 /* LaunchScreen.storyboard in Resources */,
+				45AC906F1D24E7A600751E31 /* Assets.xcassets in Resources */,
+				45AC906D1D24E7A600751E31 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45AC90761D24E7A600751E31 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45AC90811D24E7A600751E31 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		45AC90601D24E7A600751E31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45AC906A1D24E7A600751E31 /* ViewController.swift in Sources */,
+				45AC90961D2901FA00751E31 /* LogListViewController.swift in Sources */,
+				45AC909A1D290EDF00751E31 /* DailyLog.swift in Sources */,
+				45AC90981D29050F00751E31 /* LogListTableViewCell.swift in Sources */,
+				45F9CE121D33314C004657A7 /* ColorSelectionTableViewCell.swift in Sources */,
+				45AE738D1D2CB23500BF0C1D /* LogInfoCell.swift in Sources */,
+				45F9CE141D3335A0004657A7 /* color.swift in Sources */,
+				45AC90681D24E7A600751E31 /* AppDelegate.swift in Sources */,
+				45F9CE101D332CCD004657A7 /* ColorSelectionTableViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45AC90741D24E7A600751E31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45AC907D1D24E7A600751E31 /* DailyLogTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45AC907F1D24E7A600751E31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45AC90881D24E7A600751E31 /* DailyLogUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		45AC907A1D24E7A600751E31 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 45AC90631D24E7A600751E31 /* DailyLog */;
+			targetProxy = 45AC90791D24E7A600751E31 /* PBXContainerItemProxy */;
+		};
+		45AC90851D24E7A600751E31 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 45AC90631D24E7A600751E31 /* DailyLog */;
+			targetProxy = 45AC90841D24E7A600751E31 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		45AC906B1D24E7A600751E31 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				45AC906C1D24E7A600751E31 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		45AC90701D24E7A600751E31 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				45AC90711D24E7A600751E31 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		45AC908A1D24E7A600751E31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		45AC908B1D24E7A600751E31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		45AC908D1D24E7A600751E31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = DailyLog/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.KWJH.DailyLog;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		45AC908E1D24E7A600751E31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = DailyLog/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.KWJH.DailyLog;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		45AC90901D24E7A600751E31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = DailyLogTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.KWJH.DailyLogTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DailyLog.app/DailyLog";
+			};
+			name = Debug;
+		};
+		45AC90911D24E7A600751E31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = DailyLogTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.KWJH.DailyLogTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DailyLog.app/DailyLog";
+			};
+			name = Release;
+		};
+		45AC90931D24E7A600751E31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = DailyLogUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.KWJH.DailyLogUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DailyLog;
+			};
+			name = Debug;
+		};
+		45AC90941D24E7A600751E31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = DailyLogUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.KWJH.DailyLogUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DailyLog;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		45AC905F1D24E7A600751E31 /* Build configuration list for PBXProject "DailyLog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				45AC908A1D24E7A600751E31 /* Debug */,
+				45AC908B1D24E7A600751E31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		45AC908C1D24E7A600751E31 /* Build configuration list for PBXNativeTarget "DailyLog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				45AC908D1D24E7A600751E31 /* Debug */,
+				45AC908E1D24E7A600751E31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		45AC908F1D24E7A600751E31 /* Build configuration list for PBXNativeTarget "DailyLogTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				45AC90901D24E7A600751E31 /* Debug */,
+				45AC90911D24E7A600751E31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		45AC90921D24E7A600751E31 /* Build configuration list for PBXNativeTarget "DailyLogUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				45AC90931D24E7A600751E31 /* Debug */,
+				45AC90941D24E7A600751E31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 45AC905C1D24E7A600751E31 /* Project object */;
+}
