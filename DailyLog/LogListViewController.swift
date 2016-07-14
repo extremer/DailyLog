@@ -7,21 +7,26 @@
 //
 
 import UIKit
+import CoreData
 
 class LogListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, logInfoDelegate {
     
     // MARK: Properties
     @IBOutlet weak var LogListTableView: UITableView!
     
-    var addLog: Bool!
+    var context: NSManagedObjectContext!
+    var entity: NSEntityDescription!
+    var managedObject: NSManagedObject!
+    var fetchRequest: NSFetchRequest!
+    
     var color: UIColor?     //
-    //var colorName: String?  //
     var workText: String?   //
     var startTime: String?
     var endTime: String?
     var during: String?
     
     var DailyLogs = [DailyLog]()
+    var DailyLogObjects = [NSManagedObject]()
     
     // MARK: Initialization
     override func viewDidLoad() {
@@ -34,15 +39,39 @@ class LogListViewController: UIViewController, UITableViewDataSource, UITableVie
         newVC.delegate = self
         newVC.tabbarC = self.tabBarController!
         
-        if addLog != nil {
-        if addLog == true {
-            if let work = workText{
-                //새로 추가되는 거라면!
-                let newDailyLog = DailyLog.init(work: work, startTime: startTime, endTime: endTime, during: during, color: color)
-                DailyLogs += [newDailyLog]
+        context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        entity = NSEntityDescription.entityForName("WorkLogInfo", inManagedObjectContext: context)
+        managedObject = NSEntityDescription.insertNewObjectForEntityForName("WorkLogInfo", inManagedObjectContext: context) as NSManagedObject
+        
+        fetchRequest = NSFetchRequest.init(entityName: "WorkLogInfo")
+        
+//        let deleteRequest = NSBatchDeleteRequest.init(fetchRequest: fetchRequest)
+//        do {
+//            context.batch
+//            //try context.executeFetchRequest(deleteRequest)
+//            //try context.executeRequest(deleteRequest)
+//        } catch let error as NSError {
+//            print("Could not fetch \(error), \(error.userInfo)")
+//        }
+        do {
+            let results = try context.executeFetchRequest(fetchRequest)
+            DailyLogObjects = results as! [WorkLogInfo]
+            DailyLogs.removeAll()
+            for eachObject in DailyLogObjects {
+                // object to DailyLog
+                //DailyLogs += [WorkLogInfoToDailyLog(eachObject as! WorkLogInfo)]
+                context.deleteObject(eachObject)
             }
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
         }
+        do {
+            let results = try context.executeFetchRequest(fetchRequest)
+            DailyLogObjects = results as! [WorkLogInfo]
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
         }
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -50,11 +79,32 @@ class LogListViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     // MARK: function
+    func WorkLogInfoToDailyLog(info: WorkLogInfo) -> DailyLog {
+        let dur = info.during
+        let color: UIColor = NSKeyedUnarchiver.unarchiveObjectWithData(info.color!) as! UIColor
+        let newLog = DailyLog.init(work: info.work!, startTime: info.startTime, endTime: info.endTime, during: info.during, color: color)
+        return newLog
+    }
     func writeLogInfo(workName:String, startTime:String, endTime:String, during:String, color: UIColor) {
         let newLog = DailyLog.init(work: workName, startTime: startTime, endTime: endTime, during: during, color: color)
         DailyLogs += [newLog]
         
-        //tabBarController?.selectedIndex = 0
+        // Save Into CoreData
+        let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(color)
+        managedObject.setValue(colorData, forKey: "color")
+        managedObject.setValue(during, forKey: "during")
+        managedObject.setValue(workName, forKey: "work")
+        managedObject.setValue(startTime, forKey: "startTime")
+        managedObject.setValue(endTime, forKey: "endTime")
+        
+        DailyLogObjects += [managedObject]
+        
+        do {
+            try context.save()
+        }
+        catch let error as NSError{
+            print(error)
+        }
         LogListTableView.reloadData()
     }
     
@@ -78,12 +128,12 @@ class LogListViewController: UIViewController, UITableViewDataSource, UITableVie
                     return strTime
                 }
                 else {
-                    let strTime = "\(min)분"// \(sec)초"
+                    let strTime = "\(min)분"
                     return strTime
                 }
             }
             else {
-                let strTime = "\(hour)시간 \(min)분"// \(sec)초"
+                let strTime = "\(hour)시간 \(min)분"
                 return strTime
             }
         }
@@ -91,9 +141,9 @@ class LogListViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     // MARK: TableView
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        //
-//    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
 //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 //       //
 //    }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		451DF4A41D34D7D30060F380 /* coreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4A21D34D7D30060F380 /* coreDataModel.xcdatamodeld */; };
+		451DF4BB1D37524A0060F380 /* WorkLogInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4B91D37524A0060F380 /* WorkLogInfo+CoreDataProperties.swift */; };
+		451DF4BC1D37524A0060F380 /* WorkLogInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4BA1D37524A0060F380 /* WorkLogInfo.swift */; };
 		45AC90681D24E7A600751E31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90671D24E7A600751E31 /* AppDelegate.swift */; };
 		45AC906A1D24E7A600751E31 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90691D24E7A600751E31 /* ViewController.swift */; };
 		45AC906D1D24E7A600751E31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45AC906B1D24E7A600751E31 /* Main.storyboard */; };
@@ -41,6 +44,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		451DF4A31D34D7D30060F380 /* coreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		451DF4B91D37524A0060F380 /* WorkLogInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkLogInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		451DF4BA1D37524A0060F380 /* WorkLogInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkLogInfo.swift; sourceTree = "<group>"; };
 		45AC90641D24E7A600751E31 /* DailyLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45AC90671D24E7A600751E31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45AC90691D24E7A600751E31 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +97,8 @@
 		45AC905B1D24E7A600751E31 = {
 			isa = PBXGroup;
 			children = (
+				451DF4B91D37524A0060F380 /* WorkLogInfo+CoreDataProperties.swift */,
+				451DF4BA1D37524A0060F380 /* WorkLogInfo.swift */,
 				45AC90661D24E7A600751E31 /* DailyLog */,
 				45AC907B1D24E7A600751E31 /* DailyLogTests */,
 				45AC90861D24E7A600751E31 /* DailyLogUITests */,
@@ -124,6 +132,7 @@
 				45F9CE0F1D332CCD004657A7 /* ColorSelectionTableViewController.swift */,
 				45F9CE111D33314C004657A7 /* ColorSelectionTableViewCell.swift */,
 				45F9CE131D3335A0004657A7 /* color.swift */,
+				451DF4A21D34D7D30060F380 /* coreDataModel.xcdatamodeld */,
 			);
 			path = DailyLog;
 			sourceTree = "<group>";
@@ -277,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				451DF4A41D34D7D30060F380 /* coreDataModel.xcdatamodeld in Sources */,
 				45AC906A1D24E7A600751E31 /* ViewController.swift in Sources */,
 				45AC90961D2901FA00751E31 /* LogListViewController.swift in Sources */,
 				45AC909A1D290EDF00751E31 /* DailyLog.swift in Sources */,
@@ -285,6 +295,8 @@
 				45AE738D1D2CB23500BF0C1D /* LogInfoCell.swift in Sources */,
 				45F9CE141D3335A0004657A7 /* color.swift in Sources */,
 				45AC90681D24E7A600751E31 /* AppDelegate.swift in Sources */,
+				451DF4BC1D37524A0060F380 /* WorkLogInfo.swift in Sources */,
+				451DF4BB1D37524A0060F380 /* WorkLogInfo+CoreDataProperties.swift in Sources */,
 				45F9CE101D332CCD004657A7 /* ColorSelectionTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -533,6 +545,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		451DF4A21D34D7D30060F380 /* coreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				451DF4A31D34D7D30060F380 /* coreDataModel.xcdatamodel */,
+			);
+			currentVersion = 451DF4A31D34D7D30060F380 /* coreDataModel.xcdatamodel */;
+			path = coreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 45AC905C1D24E7A600751E31 /* Project object */;
 }
