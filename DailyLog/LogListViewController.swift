@@ -78,17 +78,18 @@ class LogListViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func WorkLogInfoToDailyLog(info: WorkLogInfo) -> DailyLog {
         let color: UIColor = NSKeyedUnarchiver.unarchiveObjectWithData(info.color!) as! UIColor
-        let newLog = DailyLog.init(work: info.work!, startTime: info.startTime, endTime: info.endTime, during: info.during, color: color)
+        let newLog = DailyLog.init(date: info.day!, work: info.work!, startTime: info.startTime, endTime: info.endTime, during: info.during, color: color)
         return newLog
     }
     
-    func writeLogInfo(workName:String, startTime:String, endTime:String, during:String, color: UIColor) {
-        let newLog = DailyLog.init(work: workName, startTime: startTime, endTime: endTime, during: during, color: color)
+    func writeLogInfo(date: NSDate, workName:String, startTime:String, endTime:String, during:String, color: UIColor) {
+        let newLog = DailyLog.init(date: date, work: workName, startTime: startTime, endTime: endTime, during: during, color: color)
         DailyLogs += [newLog]
         
         // Save Into CoreData
         let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(color)
         let managedObject = NSEntityDescription.insertNewObjectForEntityForName("WorkLogInfo", inManagedObjectContext: context) as NSManagedObject
+        managedObject.setValue(date, forKey: "day")
         managedObject.setValue(colorData, forKey: "color")
         managedObject.setValue(during, forKey: "during")
         managedObject.setValue(workName, forKey: "work")

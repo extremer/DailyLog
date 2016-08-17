@@ -10,6 +10,9 @@
 		451DF4A41D34D7D30060F380 /* coreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4A21D34D7D30060F380 /* coreDataModel.xcdatamodeld */; };
 		451DF4BB1D37524A0060F380 /* WorkLogInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4B91D37524A0060F380 /* WorkLogInfo+CoreDataProperties.swift */; };
 		451DF4BC1D37524A0060F380 /* WorkLogInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4BA1D37524A0060F380 /* WorkLogInfo.swift */; };
+		451DF4FE1D3CD8920060F380 /* basicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4FD1D3CD8920060F380 /* basicCollectionViewCell.swift */; };
+		451DF5001D3CE2E20060F380 /* DailyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4FF1D3CE2E20060F380 /* DailyListViewController.swift */; };
+		45A6B7A51D3F28470074671B /* dailyDataUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6B7A41D3F28470074671B /* dailyDataUnit.swift */; };
 		45AC90681D24E7A600751E31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90671D24E7A600751E31 /* AppDelegate.swift */; };
 		45AC906A1D24E7A600751E31 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90691D24E7A600751E31 /* ViewController.swift */; };
 		45AC906D1D24E7A600751E31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45AC906B1D24E7A600751E31 /* Main.storyboard */; };
@@ -47,6 +50,9 @@
 		451DF4A31D34D7D30060F380 /* coreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		451DF4B91D37524A0060F380 /* WorkLogInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkLogInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		451DF4BA1D37524A0060F380 /* WorkLogInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkLogInfo.swift; sourceTree = "<group>"; };
+		451DF4FD1D3CD8920060F380 /* basicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = basicCollectionViewCell.swift; sourceTree = "<group>"; };
+		451DF4FF1D3CE2E20060F380 /* DailyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyListViewController.swift; sourceTree = "<group>"; };
+		45A6B7A41D3F28470074671B /* dailyDataUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dailyDataUnit.swift; sourceTree = "<group>"; };
 		45AC90641D24E7A600751E31 /* DailyLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45AC90671D24E7A600751E31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45AC90691D24E7A600751E31 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -125,6 +131,7 @@
 				45AC90731D24E7A600751E31 /* Info.plist */,
 				45AC906B1D24E7A600751E31 /* Main.storyboard */,
 				45AC90691D24E7A600751E31 /* ViewController.swift */,
+				451DF4FF1D3CE2E20060F380 /* DailyListViewController.swift */,
 				45AC90951D2901FA00751E31 /* LogListViewController.swift */,
 				45AC90971D29050F00751E31 /* LogListTableViewCell.swift */,
 				45AC90991D290EDF00751E31 /* DailyLog.swift */,
@@ -132,7 +139,9 @@
 				45F9CE0F1D332CCD004657A7 /* ColorSelectionTableViewController.swift */,
 				45F9CE111D33314C004657A7 /* ColorSelectionTableViewCell.swift */,
 				45F9CE131D3335A0004657A7 /* color.swift */,
+				451DF4FD1D3CD8920060F380 /* basicCollectionViewCell.swift */,
 				451DF4A21D34D7D30060F380 /* coreDataModel.xcdatamodeld */,
+				45A6B7A41D3F28470074671B /* dailyDataUnit.swift */,
 			);
 			path = DailyLog;
 			sourceTree = "<group>";
@@ -287,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				451DF4A41D34D7D30060F380 /* coreDataModel.xcdatamodeld in Sources */,
+				451DF4FE1D3CD8920060F380 /* basicCollectionViewCell.swift in Sources */,
 				45AC906A1D24E7A600751E31 /* ViewController.swift in Sources */,
 				45AC90961D2901FA00751E31 /* LogListViewController.swift in Sources */,
 				45AC909A1D290EDF00751E31 /* DailyLog.swift in Sources */,
@@ -294,7 +304,9 @@
 				45F9CE121D33314C004657A7 /* ColorSelectionTableViewCell.swift in Sources */,
 				45AE738D1D2CB23500BF0C1D /* LogInfoCell.swift in Sources */,
 				45F9CE141D3335A0004657A7 /* color.swift in Sources */,
+				45A6B7A51D3F28470074671B /* dailyDataUnit.swift in Sources */,
 				45AC90681D24E7A600751E31 /* AppDelegate.swift in Sources */,
+				451DF5001D3CE2E20060F380 /* DailyListViewController.swift in Sources */,
 				451DF4BC1D37524A0060F380 /* WorkLogInfo.swift in Sources */,
 				451DF4BB1D37524A0060F380 /* WorkLogInfo+CoreDataProperties.swift in Sources */,
 				45F9CE101D332CCD004657A7 /* ColorSelectionTableViewController.swift in Sources */,

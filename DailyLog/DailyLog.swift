@@ -9,6 +9,7 @@
 import UIKit
 
 class DailyLog {
+    var date: NSDate!
     var work: String!
     var color: UIColor?
     var startTime: String?
@@ -16,7 +17,8 @@ class DailyLog {
     var during: String? //NSTimeInterval?  //??
     
     
-    init(work: String, startTime: String?, endTime: String?, during: String?, color: UIColor?) {
+    init(date: NSDate, work: String, startTime: String?, endTime: String?, during: String?, color: UIColor?) {
+        self.date = date
         self.work = work
         self.startTime = startTime
         self.endTime = endTime

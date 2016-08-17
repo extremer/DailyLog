@@ -9,7 +9,7 @@
 import UIKit
 
 protocol logInfoDelegate {
-    func writeLogInfo(workName:String, startTime:String, endTime:String, during:String, color: UIColor)
+    func writeLogInfo(date: NSDate, workName:String, startTime:String, endTime:String, during:String, color: UIColor)
 }
 
 class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, UITabBarControllerDelegate, UITableViewDelegate, UITableViewDataSource {
@@ -29,6 +29,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     var timer: NSTimer?
     var dateFormatter = NSDateFormatter()
     var strStartTime: String?
+    var startDate: NSDate?
     
     var buttonColor: UIColor!
     var workName: String?
@@ -70,10 +71,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             else {
                 stopWatch.start()
                 strStartTime = dateFormatter.stringFromDate(stopWatch.startTime ?? NSDate())
+                startDate = stopWatch.startTime
                 SWButton.setTitle("중단", forState: .Normal)
                 SWButtonPushed = !SWButtonPushed
-                
-                
             }
         }
         else {
@@ -148,7 +148,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         let endTime = dateFormatter.stringFromDate(stopWatch.endTime!)
         let during = stopWatch.elapsedTimeString
 
-        delegate?.writeLogInfo(text!, startTime: strStartTime!, endTime: endTime, during: during, color: buttonColor)
+        delegate?.writeLogInfo(startDate!, workName: text!, startTime: strStartTime!, endTime: endTime, during: during, color: buttonColor)
         
         infoCell.workText.text = nil
         infoCell.resignFirstResponder()

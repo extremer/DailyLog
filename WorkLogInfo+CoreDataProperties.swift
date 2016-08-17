@@ -14,6 +14,7 @@ import CoreData
 
 extension WorkLogInfo {
 
+    @NSManaged var day: NSDate?
     @NSManaged var color: NSData?
     @NSManaged var during: String?
     @NSManaged var endTime: String?
