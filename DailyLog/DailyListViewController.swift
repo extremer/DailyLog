@@ -69,8 +69,12 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         
         let numbOfItems = collectionView.numberOfItemsInSection(0)
         view.layoutIfNeeded()
-        let scrollIndex = NSIndexPath.init(forRow: numbOfItems-1, inSection: 0)
-        collectionView.scrollToItemAtIndexPath(scrollIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: false)
+        if numbOfItems != 0 {
+            let scrollIndex = NSIndexPath.init(forRow: numbOfItems-1, inSection: 0)
+            collectionView.scrollToItemAtIndexPath(scrollIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: false)
+        }
+        
+        
         //LogListTableView.reloadData()
     }
     

@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DailyLog/DailyListViewController.swift"
-            timestampString = "493182586.147813"
+            timestampString = "493195506.732975"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "296"
-            endingLineNumber = "296"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
             landmarkName = "writeLogInfo(_:workName:startTime:endTime:during:color:)"
             landmarkType = "5">
          </BreakpointContent>
