@@ -13,6 +13,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
 
     // MARK: Properties
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var shownDateTextField: UITextField!
     
     var context: NSManagedObjectContext!
     var entity: NSEntityDescription!
@@ -65,6 +66,11 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     
     override func viewWillAppear(animated: Bool) {
         collectionView.reloadData()
+        
+        let numbOfItems = collectionView.numberOfItemsInSection(0)
+        view.layoutIfNeeded()
+        let scrollIndex = NSIndexPath.init(forRow: numbOfItems-1, inSection: 0)
+        collectionView.scrollToItemAtIndexPath(scrollIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: false)
         //LogListTableView.reloadData()
     }
     
@@ -180,6 +186,21 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
                 }
             }
         }
+        // 오늘까지 추가하기
+//        let today = NSDate()
+//        let lastIndex = newDailyData.endIndex - 1
+//        let lastIndexDate = newDailyData[lastIndex].date
+//        var order = NSCalendar.currentCalendar().compareDate(today, toDate: lastIndexDate, toUnitGranularity: .Day)
+//        while order != NSComparisonResult.OrderedSame {
+//            let calendar = NSCalendar.currentCalendar()
+//            let offset = NSDateComponents.init()
+//            var dayAfter = 1
+//            let day = calendar.dateByAddingComponents(offset, toDate: lastIndexDate
+//                , options: .MatchStrictly)
+//            newDailyData.append(dailyDataUnit.init(date: day!, logs: []))
+//            dayAfter += 1
+//            order = NSCalendar.currentCalendar().compareDate(today, toDate: day!, toUnitGranularity: .Day)
+//        }
         return newDailyData
     }
     
@@ -208,7 +229,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         // collectionView Cell Size. Height나중에 필요하면 고치기
         let screenSize = UIScreen.mainScreen().bounds
         let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
+        //let screenHeight = screenSize.height
         return CGSize.init(width: screenWidth, height: screenWidth)
     }
     
@@ -218,12 +239,20 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 0
     }
+    
+    
+
 }
 
 
 extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, logInfoDelegate {
+    
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return data[tableView.tag].count
+        let date = DailyData[tableView.tag].date
+        let dateTransform = NSDateFormatter.init()
+        dateTransform.dateFormat = "yyyy.MM.dd"
+        shownDateTextField.text = dateTransform.stringFromDate(date)
         return DailyData[tableView.tag].logs.count //??
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -250,6 +279,10 @@ extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, l
         }
 
         return cell
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //deselect
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func writeLogInfo(date: NSDate, workName:String, startTime:String, endTime:String, during:String, color: UIColor) {
@@ -297,10 +330,12 @@ extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, l
                     // 오늘이 되기 전까지는 계속 추가하기
                     DailyData.append(dailyDataUnit.init(date: day!, logs: []))
                     dayAfter += 1
+                    lastIndex += 1
                     order = NSCalendar.currentCalendar().compareDate(date, toDate: day!, toUnitGranularity: .Day)
                 }
-                DailyData.append(dailyDataUnit.init(date: date, logs: [newLog]))
-                lastIndex += 1
+                DailyData[lastIndex].logs += [newLog]
+//                DailyData.append(dailyDataUnit.init(date: date, logs: [newLog]))
+                
             }
         }
         
