@@ -44,6 +44,32 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
     }
 
+    override func viewDidAppear(animated: Bool) {
+        let setting = NSUserDefaults.standardUserDefaults()
+        let startedTime = setting.valueForKey("startTime")
+        let text = setting.valueForKey("text")
+        let colorData = setting.valueForKey("color")
+        
+        if let startTime = startedTime {
+            if let text = text {
+                let infoCell = workInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! LogInfoCell
+                infoCell.workText.text = text as! String
+                
+                if let colorData = colorData {
+                    let color = NSKeyedUnarchiver.unarchiveObjectWithData(colorData as! NSData)
+                    infoCell.colorButton.backgroundColor = color as! UIColor
+                }
+                // stopwatch 진행
+                stopWatch.start()
+                stopWatch.startTime = startTime as! NSDate
+                strStartTime = dateFormatter.stringFromDate(stopWatch.startTime ?? NSDate())
+                startDate = stopWatch.startTime
+                SWButton.setTitle("중단", forState: .Normal)
+                SWButtonPushed = !SWButtonPushed
+            }
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -54,7 +80,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         if SWButtonPushed == false {
             // start SW
             let infoCell = workInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! LogInfoCell
-            if infoCell.workText.text == "" {
+            workName = infoCell.workText.text
+            if workName == "" {
                 // text가 비어있으면 start버튼 눌리지 않음
                 
                 let alert = UIAlertController(title: "일정이 없어요!", message:"지금 하려는 일을 적어주세요!", preferredStyle: .Alert)
@@ -70,6 +97,11 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             }
             else {
                 stopWatch.start()
+                // workName 저장(혹시 중간에 앱이 종료될 때를 대비하여)
+                let setting = NSUserDefaults.standardUserDefaults()
+                setting.setObject(workName, forKey: "text")
+                setting.synchronize()
+                
                 strStartTime = dateFormatter.stringFromDate(stopWatch.startTime ?? NSDate())
                 startDate = stopWatch.startTime
                 SWButton.setTitle("중단", forState: .Normal)
@@ -134,11 +166,22 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             startTime = NSDate()
             //self.update
             
+            //앱이 도중에 꺼질 일을 대비하여 startTime 저장
+            let setting = NSUserDefaults.standardUserDefaults()
+            setting.setObject(startTime, forKey: "startTime")
+            setting.synchronize()
         }
         mutating func stop() {
             accumulatedTime += NSDate().timeIntervalSinceDate(startTime ?? NSDate())
             endTime = startTime?.dateByAddingTimeInterval(accumulatedTime)
             startTime = nil
+            
+            // startTime -> nil로 저장
+            let setting = NSUserDefaults.standardUserDefaults()
+            setting.setObject(startTime, forKey: "startTime")
+            setting.setObject(nil, forKey: "text")
+            setting.setObject(nil, forKey: "color")
+            setting.synchronize()
         }
     }
     
@@ -194,6 +237,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                 buttonColorIndex = sourceViewController.selectedRow
                 let infoCell = workInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! LogInfoCell
                 infoCell.colorButton.backgroundColor = buttonColor
+                let setting = NSUserDefaults.standardUserDefaults()
+                let colorData = NSKeyedArchiver.archivedDataWithRootObject(buttonColor)
+                setting.setObject(colorData, forKey: "color")
+                setting.synchronize()
             }
         }
     }

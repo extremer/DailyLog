@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DailyLog/ViewController.swift"
-            timestampString = "490543526.394757"
+            timestampString = "493273116.666649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
             landmarkName = "passTimeData()"
             landmarkType = "5">
          </BreakpointContent>
@@ -25,14 +25,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DailyLog/DailyListViewController.swift"
-            timestampString = "493195506.732975"
+            filePath = "DailyLog/ViewController.swift"
+            timestampString = "493273116.666649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
-            landmarkName = "writeLogInfo(_:workName:startTime:endTime:during:color:)"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "viewDidAppear(_:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DailyLog.ViewController.viewDidAppear (Swift.Bool) -&gt; ()"
+                  moduleName = "DailyLog"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/KyungwonKang/DailyLog/DailyLog/ViewController.swift"
+                  timestampString = "493273160.1065"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "1488">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DailyLog.ViewController.viewDidAppear (Swift.Bool) -&gt; ()"
+                  moduleName = "DailyLog"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/KyungwonKang/DailyLog/DailyLog/ViewController.swift"
+                  timestampString = "493273160.106872"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "1529">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
