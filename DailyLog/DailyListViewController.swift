@@ -29,7 +29,9 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     
     var DailyLogs = [DailyLog]()
     var DailyLogObjects = [NSManagedObject]()
-    
+    var selectedCellIndexPath: NSIndexPath?
+    var selectedCellTag: Int?
+    var selectedObjectIndex: Int?
     
     // MARK: Initialization
     override func viewDidLoad() {
@@ -61,6 +63,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
             print("Could not fetch \(error), \(error.userInfo)")
         }
         DailyData = bindingLogsDaily(DailyLogs)
+        DailyLogs.removeAll()
         //saveCoreData(context)
     }
     
@@ -245,12 +248,150 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     
+    // MARK: Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowDetail"{
+            let naviC = segue.destinationViewController as! UINavigationController
+            let detailViewController = naviC.topViewController as! LogDatailTableViewController
+            if let selectedCellTag = selectedCellTag{
+                if let selectedCellIndexPath = selectedCellIndexPath{
+                    let selectedLog = DailyData[selectedCellTag].logs[selectedCellIndexPath.row]
+                    detailViewController.logData = selectedLog
+                    selectedObjectIndex = findIndexOfManagedObject(selectedLog)
+                }
+            }
+        }
+    }
+    
+    // unwind segue
+    @IBAction func unwindToLogList(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.sourceViewController as? LogDatailTableViewController {
+            if sender.identifier == "DeleteLog" {
+                if let selectedCellTag = selectedCellTag{
+                    if let selectedCellIndexPath = selectedCellIndexPath{
+                        let deletedLog = DailyData[selectedCellTag].logs[selectedCellIndexPath.row]
+                        DailyData[selectedCellTag].logs.removeAtIndex(selectedCellIndexPath.row)
+                        // deletet
+                        deleteLogInfo(deletedLog)
+                        collectionView.reloadData()
+                        //?? reloadData바꿔보기~
+                        
+                    }
+                }
+            } else if sender.identifier == "SaveLog" {
+                let log = sourceViewController.logData!
+                
+                if let index = selectedObjectIndex {
+                    let selectedObject = DailyLogObjects[index]
+                    
+                    let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(log.color!)
+                    selectedObject.setValue(log.date, forKey: "day")
+                    selectedObject.setValue(log.during, forKey: "during")
+                    selectedObject.setValue(log.work, forKey: "work")
+                    selectedObject.setValue(log.startTime, forKey: "startTime")
+                    selectedObject.setValue(log.endTime, forKey: "endTime")
+                    selectedObject.setValue(colorData, forKey: "color")
 
+                    do {
+                        try context.save()
+                    }
+                    catch let error as NSError{
+                        print(error)
+                    }
+                    collectionView.reloadData()
+                }
+            }
+        }
+        selectedObjectIndex = nil
+        selectedCellTag = nil
+        selectedCellIndexPath = nil
+    }
+    
+    func findIndexOfManagedObject(log: DailyLog) -> Int{
+        // log와 같은 내용의 값을
+        // DailyLogObjects에서 찾는다
+        var idx = 0
+        for obj in DailyLogObjects {
+            let obj = obj as! WorkLogInfo
+            let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(log.color!)
+            if log.date == obj.day && colorData == obj.color && log.work == obj.work && log.startTime == obj.startTime && log.endTime == obj.endTime && log.during == obj.during {
+                break
+            }
+            idx += 1
+        }
+        return idx
+    }
+    
+    func deleteLogInfo(log: DailyLog) {
+        let index = findIndexOfManagedObject(log)
+        context.deleteObject(DailyLogObjects[index])
+        do {
+            try context.save()
+        }
+        catch let error as NSError{
+            print(error)
+        }
+    }
+    func writeLogInfo(date: NSDate, workName:String, startTime:String, endTime:String, during:String, color: UIColor) {
+        let newLog = DailyLog.init(date: date, work: workName, startTime: startTime, endTime: endTime, during: during, color: color)
+        var lastIndex = DailyData.endIndex - 1
+        
+        // Save Into CoreData
+        let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(color)
+        let managedObject = NSEntityDescription.insertNewObjectForEntityForName("WorkLogInfo", inManagedObjectContext: context) as NSManagedObject
+        managedObject.setValue(date, forKey: "day")
+        managedObject.setValue(colorData, forKey: "color")
+        managedObject.setValue(during, forKey: "during")
+        managedObject.setValue(workName, forKey: "work")
+        managedObject.setValue(startTime, forKey: "startTime")
+        managedObject.setValue(endTime, forKey: "endTime")
+        
+        do {
+            try context.save()
+        }
+        catch let error as NSError{
+            print(error)
+        }
+        
+        // DailyData 에 추가
+        if DailyData.count == 0 {
+            //DailyData += [(date, [newLog])]
+            DailyData.append(dailyDataUnit.init(date: date, logs: [newLog]))
+        }
+        else {
+            let lastIndexDate = DailyData[lastIndex].date
+            var order = NSCalendar.currentCalendar().compareDate(date, toDate: lastIndexDate, toUnitGranularity: .Day)
+            if order == NSComparisonResult.OrderedSame {
+                // array의 마지막 날짜가 오늘이라면 오늘 로그에 추가
+                DailyData[lastIndex].logs += [newLog]
+            }
+            else {
+                // array의 마지막 날짜가 오늘이 아니라면 오늘까지 추가
+                let calendar = NSCalendar.currentCalendar()
+                let offset = NSDateComponents.init()
+                var dayAfter = 1
+                while order != NSComparisonResult.OrderedSame {
+                    offset.setValue(dayAfter, forComponent: .Day)
+                    let day = calendar.dateByAddingComponents(offset, toDate: lastIndexDate, options: .MatchStrictly)
+                    // 오늘이 되기 전까지는 계속 추가하기
+                    DailyData.append(dailyDataUnit.init(date: day!, logs: []))
+                    dayAfter += 1
+                    lastIndex += 1
+                    order = NSCalendar.currentCalendar().compareDate(date, toDate: day!, toUnitGranularity: .Day)
+                }
+                DailyData[lastIndex].logs += [newLog]
+                //                DailyData.append(dailyDataUnit.init(date: date, logs: [newLog]))
+                
+            }
+        }
+        
+        //DailyLogs += [newLog]   //
+        collectionView.reloadData()
+    }
 }
 
 
 extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, logInfoDelegate {
-    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let date = DailyData[tableView.tag].date
@@ -285,65 +426,15 @@ extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, l
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //deselect
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+       
+        selectedCellTag = tableView.tag
+        selectedCellIndexPath = indexPath
+        
+        // segue 호출
+        performSegueWithIdentifier("ShowDetail", sender: self)
+         //deselect
+        //tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
-    func writeLogInfo(date: NSDate, workName:String, startTime:String, endTime:String, during:String, color: UIColor) {
-        let newLog = DailyLog.init(date: date, work: workName, startTime: startTime, endTime: endTime, during: during, color: color)
-        var lastIndex = DailyData.endIndex - 1
-        
-        
-        // Save Into CoreData
-        let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(color)
-        let managedObject = NSEntityDescription.insertNewObjectForEntityForName("WorkLogInfo", inManagedObjectContext: context) as NSManagedObject
-        managedObject.setValue(date, forKey: "day")
-        managedObject.setValue(colorData, forKey: "color")
-        managedObject.setValue(during, forKey: "during")
-        managedObject.setValue(workName, forKey: "work")
-        managedObject.setValue(startTime, forKey: "startTime")
-        managedObject.setValue(endTime, forKey: "endTime")
-        
-        do {
-            try context.save()
-        }
-        catch let error as NSError{
-            print(error)
-        }
-
-        // DailyData 에 추가
-        if DailyData.count == 0 {
-            //DailyData += [(date, [newLog])]
-            DailyData.append(dailyDataUnit.init(date: date, logs: [newLog]))
-        }
-        else {
-            let lastIndexDate = DailyData[lastIndex].date
-            var order = NSCalendar.currentCalendar().compareDate(date, toDate: lastIndexDate, toUnitGranularity: .Day)
-            if order == NSComparisonResult.OrderedSame {
-                // array의 마지막 날짜가 오늘이라면 오늘 로그에 추가
-                DailyData[lastIndex].logs += [newLog]
-            }
-            else {
-                // array의 마지막 날짜가 오늘이 아니라면 오늘까지 추가
-                let calendar = NSCalendar.currentCalendar()
-                let offset = NSDateComponents.init()
-                var dayAfter = 1
-                while order != NSComparisonResult.OrderedSame {
-                    offset.setValue(dayAfter, forComponent: .Day)
-                    let day = calendar.dateByAddingComponents(offset, toDate: lastIndexDate, options: .MatchStrictly)
-                    // 오늘이 되기 전까지는 계속 추가하기
-                    DailyData.append(dailyDataUnit.init(date: day!, logs: []))
-                    dayAfter += 1
-                    lastIndex += 1
-                    order = NSCalendar.currentCalendar().compareDate(date, toDate: day!, toUnitGranularity: .Day)
-                }
-                DailyData[lastIndex].logs += [newLog]
-//                DailyData.append(dailyDataUnit.init(date: date, logs: [newLog]))
-                
-            }
-        }
-        
-        DailyLogs += [newLog]   //
-        collectionView.reloadData()
-    }
+    
 }

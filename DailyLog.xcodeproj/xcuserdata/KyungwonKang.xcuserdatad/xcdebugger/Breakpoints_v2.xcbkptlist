@@ -13,58 +13,10 @@
             timestampString = "493273116.666649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
-            landmarkName = "passTimeData()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DailyLog/ViewController.swift"
-            timestampString = "493273116.666649"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "58"
             endingLineNumber = "58"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "DailyLog.ViewController.viewDidAppear (Swift.Bool) -&gt; ()"
-                  moduleName = "DailyLog"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/KyungwonKang/DailyLog/DailyLog/ViewController.swift"
-                  timestampString = "493273160.1065"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58"
-                  offsetFromSymbolStart = "1488">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "DailyLog.ViewController.viewDidAppear (Swift.Bool) -&gt; ()"
-                  moduleName = "DailyLog"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/KyungwonKang/DailyLog/DailyLog/ViewController.swift"
-                  timestampString = "493273160.106872"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58"
-                  offsetFromSymbolStart = "1529">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
