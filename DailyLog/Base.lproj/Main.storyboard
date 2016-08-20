@@ -392,7 +392,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FRd-wd-hEA">
-                                <rect key="frame" x="-4" y="43" width="383" height="449"/>
+                                <rect key="frame" x="-4" y="50" width="383" height="442"/>
                                 <color key="backgroundColor" red="0.7976052270645646" green="1" blue="0.72207104676523348" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YlV-Em-kxy">
                                     <size key="itemSize" width="379" height="331.5"/>
@@ -402,7 +402,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="basicCollectionViewCell" id="M0d-iz-nkJ" customClass="basicCollectionViewCell" customModule="DailyLog" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="34.5" width="379" height="331.5"/>
+                                        <rect key="frame" x="0.0" y="31" width="379" height="331.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="379" height="331.5"/>
@@ -491,7 +491,7 @@
                                 </connections>
                             </collectionView>
                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="date" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h5N-v5-sPE">
-                                <rect key="frame" x="122" y="53" width="131" height="30"/>
+                                <rect key="frame" x="122" y="20" width="131" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="07R-J2-3aE"/>
                                     <constraint firstAttribute="width" constant="131" id="Iy6-sP-eVk"/>
@@ -503,11 +503,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0lZ-5s-iHK" firstAttribute="top" secondItem="FRd-wd-hEA" secondAttribute="bottom" constant="126" id="6cc-yo-Oay"/>
-                            <constraint firstItem="FRd-wd-hEA" firstAttribute="top" secondItem="h5N-v5-sPE" secondAttribute="bottom" constant="-40" id="HjT-NH-nmc"/>
+                            <constraint firstItem="FRd-wd-hEA" firstAttribute="top" secondItem="h5N-v5-sPE" secondAttribute="bottom" id="HjT-NH-nmc"/>
                             <constraint firstItem="FRd-wd-hEA" firstAttribute="leading" secondItem="g2L-mb-jel" secondAttribute="leadingMargin" constant="-20" id="Jx7-yO-t7y"/>
                             <constraint firstItem="h5N-v5-sPE" firstAttribute="centerX" secondItem="FRd-wd-hEA" secondAttribute="centerX" id="PFZ-ng-ZOw"/>
                             <constraint firstItem="h5N-v5-sPE" firstAttribute="centerX" secondItem="g2L-mb-jel" secondAttribute="centerX" id="VMD-jF-Beg"/>
-                            <constraint firstItem="h5N-v5-sPE" firstAttribute="top" secondItem="g2L-mb-jel" secondAttribute="topMargin" constant="53" id="xYA-To-H4C"/>
+                            <constraint firstItem="h5N-v5-sPE" firstAttribute="top" secondItem="g2L-mb-jel" secondAttribute="topMargin" constant="20" id="xYA-To-H4C"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Daily Log List" id="MxG-cD-qnq"/>
@@ -634,7 +634,6 @@
                                                     <date key="date" timeIntervalSinceReferenceDate="493294154.98435998">
                                                         <!--2016-08-19 10:09:14 +0000-->
                                                     </date>
-                                                    <locale key="locale" localeIdentifier="ko_KR"/>
                                                     <connections>
                                                         <action selector="startPickerChanged:" destination="k4C-O1-HL3" eventType="valueChanged" id="QqM-C5-09W"/>
                                                     </connections>
@@ -722,7 +721,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Delete" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mPa-4k-V62">
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Delete" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mPa-4k-V62">
                                                     <rect key="frame" x="8" y="0.0" width="359" height="43.5"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -732,6 +731,12 @@
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="mPa-4k-V62" firstAttribute="leading" secondItem="VlH-YS-rlz" secondAttribute="leadingMargin" id="0ec-Aj-tQj"/>
+                                                <constraint firstItem="mPa-4k-V62" firstAttribute="trailing" secondItem="VlH-YS-rlz" secondAttribute="trailingMargin" id="EY5-qP-ydN"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="mPa-4k-V62" secondAttribute="bottom" constant="-8" id="RDr-iM-Ll7"/>
+                                                <constraint firstItem="mPa-4k-V62" firstAttribute="top" secondItem="VlH-YS-rlz" secondAttribute="topMargin" constant="-8" id="wIR-Jm-SgW"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="j1M-m2-z9z" kind="unwind" identifier="DeleteLog" unwindAction="unwindToLogList:" id="rBf-uG-vjJ"/>

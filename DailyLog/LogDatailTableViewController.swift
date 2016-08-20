@@ -62,6 +62,7 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
                 let diff = endDatePicker.date.timeIntervalSinceDate(startDatePicker.date)
                 duringTemp = timeIntervalToString(diff)
             }
+            viewDidLayoutSubviewsComplete = true
         }
     }
     
