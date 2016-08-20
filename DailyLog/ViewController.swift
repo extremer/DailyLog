@@ -40,7 +40,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         buttonColor = UIColor.darkGrayColor()
         buttonColorIndex = 0
-        dateFormatter.dateFormat = "HH:mm:ss"
+        dateFormatter.dateFormat = "h:mm:ss a"
         self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
     }
 

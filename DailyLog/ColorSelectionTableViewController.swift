@@ -16,7 +16,16 @@ class ColorSelectionTableViewController: UITableViewController {
     var selectedRow: Int!
     
     @IBAction func cancel(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
+        //dismissViewControllerAnimated(true, completion: nil)
+        let isPresentingInAddNewLog = presentingViewController is UINavigationController
+        if isPresentingInAddNewLog{
+            dismissViewControllerAnimated(true, completion: nil)
+        }
+        else{
+            // 네비게이션 스택에서 가장 위 meal scene의 view Controller를 pop
+            navigationController!.popViewControllerAnimated(true)
+            
+        }
     }
 
     // MARK: Initialization

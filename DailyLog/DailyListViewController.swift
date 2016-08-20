@@ -55,9 +55,11 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
             let results = try context.executeFetchRequest(fetchRequest)
             DailyLogObjects = results as! [WorkLogInfo]
             DailyLogs.removeAll()
+
             for eachObject in DailyLogObjects {
-                DailyLogs += [WorkLogInfoToDailyLog(eachObject as! WorkLogInfo)]
                 //context.deleteObject(eachObject)
+                DailyLogs += [WorkLogInfoToDailyLog(eachObject as! WorkLogInfo)]
+                
             }
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
@@ -314,6 +316,11 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         for obj in DailyLogObjects {
             let obj = obj as! WorkLogInfo
             let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(log.color!)
+            let d = obj.day
+            let w = obj.work
+            let s = obj.startTime
+            let e = obj.endTime
+            let dd = obj.during
             if log.date == obj.day && colorData == obj.color && log.work == obj.work && log.startTime == obj.startTime && log.endTime == obj.endTime && log.during == obj.during {
                 break
             }
@@ -346,6 +353,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         managedObject.setValue(startTime, forKey: "startTime")
         managedObject.setValue(endTime, forKey: "endTime")
         
+        
         do {
             try context.save()
         }
@@ -353,9 +361,10 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
             print(error)
         }
         
+        DailyLogObjects += [managedObject]
+        
         // DailyData 에 추가
         if DailyData.count == 0 {
-            //DailyData += [(date, [newLog])]
             DailyData.append(dailyDataUnit.init(date: date, logs: [newLog]))
         }
         else {
