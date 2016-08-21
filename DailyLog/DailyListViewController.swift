@@ -33,6 +33,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     var selectedCellTag: Int?
     var selectedObjectIndex: Int?
     
+    var firstViewLayout = false
     // MARK: Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,14 +72,22 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     
     override func viewWillAppear(animated: Bool) {
         collectionView.reloadData()
-        
-        let numbOfItems = collectionView.numberOfItemsInSection(0)
-        view.layoutIfNeeded()
-        if numbOfItems != 0 {
-            let scrollIndex = NSIndexPath.init(forRow: numbOfItems-1, inSection: 0)
-            collectionView.scrollToItemAtIndexPath(scrollIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: false)
+        if firstViewLayout == false {
+            let numbOfItems = collectionView.numberOfItemsInSection(0)
+            view.layoutIfNeeded()
+            if numbOfItems != 0 {
+                let scrollIndex = NSIndexPath.init(forRow: numbOfItems-1, inSection: 0)
+                collectionView.scrollToItemAtIndexPath(scrollIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: false)
+                
+                let displayedCollectionViewCell = collectionView.visibleCells()[0] as! basicCollectionViewCell
+                let displayedTableView = displayedCollectionViewCell.dailyTableView
+                let date = DailyData[displayedTableView.tag].date
+                let dateTransform = NSDateFormatter.init()
+                dateTransform.dateFormat = "yyyy.MM.dd"
+                shownDateTextField.text = dateTransform.stringFromDate(date)
+            }
+            firstViewLayout = true
         }
-        
         
         //LogListTableView.reloadData()
     }
@@ -235,18 +244,11 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        // collectionView Cell Size. Height나중에 필요하면 고치기
-        let screenSize = UIScreen.mainScreen().bounds
-        let screenWidth = screenSize.width
-        //let screenHeight = screenSize.height
-        return CGSize.init(width: screenWidth, height: screenWidth)
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 0
-    }
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 0
+        collectionView.layoutIfNeeded()
+        let size = collectionView.bounds.size
+        return CGSizeMake(size.width, size.height)
+//        let size = UIScreen.mainScreen().bounds.size
+//        return CGSizeMake(size.width, size.height)
     }
     
     
@@ -400,13 +402,14 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
 }
 
 
-extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, logInfoDelegate {
+extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, logInfoDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let date = DailyData[tableView.tag].date
-        let dateTransform = NSDateFormatter.init()
-        dateTransform.dateFormat = "yyyy.MM.dd"
-        shownDateTextField.text = dateTransform.stringFromDate(date)
+        // animation이 종료된 후
+//        let date = DailyData[tableView.tag].date
+//        let dateTransform = NSDateFormatter.init()
+//        dateTransform.dateFormat = "yyyy.MM.dd"
+//        shownDateTextField.text = dateTransform.stringFromDate(date)
         return DailyData[tableView.tag].logs.count //??
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -445,5 +448,16 @@ extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, l
         //tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    // MARK: ScrollViewDelegate
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        // 현재 collectionviewcell을 가져온다
+        let displayedCollectionViewCell = collectionView.visibleCells()[0] as! basicCollectionViewCell
+        let displayedTableView = displayedCollectionViewCell.dailyTableView
+        
+        let date = DailyData[displayedTableView.tag].date
+        let dateTransform = NSDateFormatter.init()
+        dateTransform.dateFormat = "yyyy.MM.dd"
+        shownDateTextField.text = dateTransform.stringFromDate(date)
+    }
     
 }
