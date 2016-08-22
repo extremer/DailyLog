@@ -34,6 +34,8 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     var selectedObjectIndex: Int?
     
     var firstViewLayout = false
+    var newItemAdded = false
+
     // MARK: Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +67,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
+
         DailyData = bindingLogsDaily(DailyLogs)
         DailyLogs.removeAll()
         //saveCoreData(context)
@@ -79,17 +82,28 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
                 let scrollIndex = NSIndexPath.init(forRow: numbOfItems-1, inSection: 0)
                 collectionView.scrollToItemAtIndexPath(scrollIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: false)
                 
-                let displayedCollectionViewCell = collectionView.visibleCells()[0] as! basicCollectionViewCell
-                let displayedTableView = displayedCollectionViewCell.dailyTableView
-                let date = DailyData[displayedTableView.tag].date
                 let dateTransform = NSDateFormatter.init()
                 dateTransform.dateFormat = "yyyy.MM.dd"
+                //if let date = lasDateInCoreData {}
+                let date = NSDate()
                 shownDateTextField.text = dateTransform.stringFromDate(date)
+                
             }
             firstViewLayout = true
         }
-        
+        if newItemAdded == true {
+            collectionView.layoutIfNeeded() //이거 대박
+            let numbOfItems = collectionView.numberOfItemsInSection(0)
+            let scrollIndex = NSIndexPath.init(forRow: numbOfItems-1, inSection: 0)
+            collectionView.scrollToItemAtIndexPath(scrollIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: false)
+            newItemAdded = false
+        }
         //LogListTableView.reloadData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
     }
     
     // MARK: Function
@@ -205,20 +219,21 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
             }
         }
         // 오늘까지 추가하기
-//        let today = NSDate()
-//        let lastIndex = newDailyData.endIndex - 1
-//        let lastIndexDate = newDailyData[lastIndex].date
-//        var order = NSCalendar.currentCalendar().compareDate(today, toDate: lastIndexDate, toUnitGranularity: .Day)
-//        while order != NSComparisonResult.OrderedSame {
-//            let calendar = NSCalendar.currentCalendar()
-//            let offset = NSDateComponents.init()
-//            var dayAfter = 1
-//            let day = calendar.dateByAddingComponents(offset, toDate: lastIndexDate
-//                , options: .MatchStrictly)
-//            newDailyData.append(dailyDataUnit.init(date: day!, logs: []))
-//            dayAfter += 1
-//            order = NSCalendar.currentCalendar().compareDate(today, toDate: day!, toUnitGranularity: .Day)
-//        }
+        let today = NSDate()
+        let lastIndex = newDailyData.endIndex - 1
+        let lastIndexDate = newDailyData[lastIndex].date
+        var order = NSCalendar.currentCalendar().compareDate(today, toDate: lastIndexDate, toUnitGranularity: .Day)
+        while order != NSComparisonResult.OrderedSame {
+            let calendar = NSCalendar.currentCalendar()
+            let offset = NSDateComponents.init()
+            var dayAfter = 1
+            offset.setValue(dayAfter, forComponent: .Day)
+            let day = calendar.dateByAddingComponents(offset, toDate: lastIndexDate
+                , options: .MatchStrictly)
+            newDailyData.append(dailyDataUnit.init(date: day!, logs: []))
+            dayAfter += 1
+            order = NSCalendar.currentCalendar().compareDate(today, toDate: day!, toUnitGranularity: .Day)
+        }
         return newDailyData
     }
     
@@ -302,6 +317,9 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
                     catch let error as NSError{
                         print(error)
                     }
+                    
+                    //
+                    
                     collectionView.reloadData()
                 }
             }
@@ -339,6 +357,76 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         }
         catch let error as NSError{
             print(error)
+        }
+    }
+    
+}
+
+
+extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, logInfoDelegate {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return DailyData[tableView.tag].logs.count //??
+    }
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("LogListTableViewCell", forIndexPath: indexPath) as! LogListTableViewCell
+        
+        let DailyLog = DailyData[tableView.tag].logs[indexPath.row] //DailyLogs[indexPath.row]
+        if let work = DailyLog.work {
+            cell.workLabel.text = work
+            if let color = DailyLog.color {
+                cell.colorLabel.backgroundColor = UIColor.clearColor()//color
+                cell.colorLabel.layer.backgroundColor = color.CGColor
+            }
+            else {
+                cell.colorLabel.text = ""
+            }
+            if let during = DailyLog.during {
+                let strTime = changeTimeFormatToShow(during)
+                cell.timeLabel.text = strTime
+            }
+            else {
+                cell.timeLabel.text = ""
+            }
+        }
+
+        return cell
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+       
+        selectedCellTag = tableView.tag
+        selectedCellIndexPath = indexPath
+        
+        // segue 호출
+        performSegueWithIdentifier("ShowDetail", sender: self)
+         //deselect
+        //tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    // MARK: ScrollViewDelegate
+
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        // 현재 collectionviewcell을 가져온다
+        let scrollPosition = scrollView.contentOffset   // current view의 시작point
+        var idx = 0
+        
+        
+        let visibleCells = collectionView.visibleCells()    //[0] as! basicCollectionViewCell
+        var displayedCollectionViewCell: basicCollectionViewCell?
+        for cell in visibleCells {
+            let frame = cell.frame
+            if scrollPosition.x == frame.origin.x {
+                displayedCollectionViewCell = cell as? basicCollectionViewCell
+                break
+            }
+            idx += 1
+        }
+        if let displayedCollectionViewCell = displayedCollectionViewCell {
+            let displayedTableView = displayedCollectionViewCell.dailyTableView
+            let date = DailyData[displayedTableView.tag].date
+            let dateTransform = NSDateFormatter.init()
+            dateTransform.dateFormat = "yyyy.MM.dd"
+            shownDateTextField.text = dateTransform.stringFromDate(date)
         }
     }
     func writeLogInfo(date: NSDate, workName:String, startTime:String, endTime:String, during:String, color: UIColor) {
@@ -391,73 +479,11 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
                     order = NSCalendar.currentCalendar().compareDate(date, toDate: day!, toUnitGranularity: .Day)
                 }
                 DailyData[lastIndex].logs += [newLog]
-                //                DailyData.append(dailyDataUnit.init(date: date, logs: [newLog]))
                 
             }
         }
-        
+        newItemAdded = true
         //DailyLogs += [newLog]   //
         collectionView.reloadData()
     }
-}
-
-
-extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, logInfoDelegate {
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // animation이 종료된 후
-//        let date = DailyData[tableView.tag].date
-//        let dateTransform = NSDateFormatter.init()
-//        dateTransform.dateFormat = "yyyy.MM.dd"
-//        shownDateTextField.text = dateTransform.stringFromDate(date)
-        return DailyData[tableView.tag].logs.count //??
-    }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("LogListTableViewCell", forIndexPath: indexPath) as! LogListTableViewCell
-        //cell.testLabel.text = data[tableView.tag][indexPath.item]   // row? item?
-        
-        let DailyLog = DailyData[tableView.tag].logs[indexPath.row] //DailyLogs[indexPath.row]
-        if let work = DailyLog.work {
-            cell.workLabel.text = work
-            if let color = DailyLog.color {
-                cell.colorLabel.backgroundColor = UIColor.clearColor()//color
-                cell.colorLabel.layer.backgroundColor = color.CGColor
-            }
-            else {
-                cell.colorLabel.text = ""
-            }
-            if let during = DailyLog.during {
-                let strTime = changeTimeFormatToShow(during)
-                cell.timeLabel.text = strTime
-            }
-            else {
-                cell.timeLabel.text = ""
-            }
-        }
-
-        return cell
-    }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-       
-        selectedCellTag = tableView.tag
-        selectedCellIndexPath = indexPath
-        
-        // segue 호출
-        performSegueWithIdentifier("ShowDetail", sender: self)
-         //deselect
-        //tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
-    
-    // MARK: ScrollViewDelegate
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        // 현재 collectionviewcell을 가져온다
-        let displayedCollectionViewCell = collectionView.visibleCells()[0] as! basicCollectionViewCell
-        let displayedTableView = displayedCollectionViewCell.dailyTableView
-        
-        let date = DailyData[displayedTableView.tag].date
-        let dateTransform = NSDateFormatter.init()
-        dateTransform.dateFormat = "yyyy.MM.dd"
-        shownDateTextField.text = dateTransform.stringFromDate(date)
-    }
-    
 }
