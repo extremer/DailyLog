@@ -43,7 +43,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         
         self.tabBarController?.delegate = UIApplication.sharedApplication().delegate as? UITabBarControllerDelegate
         
-        let newVC = tabBarController?.viewControllers![1] as! ViewController
+        let newVC = tabBarController?.viewControllers![1] as! AddNewLogViewController
         newVC.delegate = self
         newVC.tabbarC = self.tabBarController!
         
@@ -221,12 +221,15 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         // 오늘까지 추가하기
         let today = NSDate()
         let lastIndex = newDailyData.endIndex - 1
+        if lastIndex == -1 {
+            return newDailyData
+        }
         let lastIndexDate = newDailyData[lastIndex].date
         var order = NSCalendar.currentCalendar().compareDate(today, toDate: lastIndexDate, toUnitGranularity: .Day)
+        var dayAfter = 1
         while order != NSComparisonResult.OrderedSame {
             let calendar = NSCalendar.currentCalendar()
             let offset = NSDateComponents.init()
-            var dayAfter = 1
             offset.setValue(dayAfter, forComponent: .Day)
             let day = calendar.dateByAddingComponents(offset, toDate: lastIndexDate
                 , options: .MatchStrictly)
@@ -245,12 +248,12 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cellIdentifier = "basicCollectionViewCell"
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! basicCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! BasicCollectionViewCell
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        guard let collectionViewCell = cell as? basicCollectionViewCell else { return }
+        guard let collectionViewCell = cell as? BasicCollectionViewCell else { return }
         
         
         // indexPath.row 를 넘길 때 날짜 매칭을 해서, 해당 날짜에 해당하는 데이터가 없으면 ? 
@@ -336,11 +339,6 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         for obj in DailyLogObjects {
             let obj = obj as! WorkLogInfo
             let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(log.color!)
-            let d = obj.day
-            let w = obj.work
-            let s = obj.startTime
-            let e = obj.endTime
-            let dd = obj.during
             if log.date == obj.day && colorData == obj.color && log.work == obj.work && log.startTime == obj.startTime && log.endTime == obj.endTime && log.during == obj.during {
                 break
             }
@@ -412,11 +410,11 @@ extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, U
         
         
         let visibleCells = collectionView.visibleCells()    //[0] as! basicCollectionViewCell
-        var displayedCollectionViewCell: basicCollectionViewCell?
+        var displayedCollectionViewCell: BasicCollectionViewCell?
         for cell in visibleCells {
             let frame = cell.frame
             if scrollPosition.x == frame.origin.x {
-                displayedCollectionViewCell = cell as? basicCollectionViewCell
+                displayedCollectionViewCell = cell as? BasicCollectionViewCell
                 break
             }
             idx += 1

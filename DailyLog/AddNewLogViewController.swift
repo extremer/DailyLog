@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  AddNewLogViewController.swift
 //  DailyLog
 //
 //  Created by KangKyungwon on 2016. 6. 30..
@@ -12,8 +12,8 @@ protocol logInfoDelegate {
     func writeLogInfo(date: NSDate, workName:String, startTime:String, endTime:String, during:String, color: UIColor)
 }
 
-class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, UITabBarControllerDelegate, UITableViewDelegate, UITableViewDataSource {
-
+class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, UITabBarControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+    
     // MARK: Properties
     @IBOutlet weak var SWButton: UIButton!
     //@IBOutlet weak var workText: UITextField!

@@ -17,7 +17,7 @@ class ColorSelectionTableViewController: UITableViewController {
     
     @IBAction func cancel(sender: UIBarButtonItem) {
         //dismissViewControllerAnimated(true, completion: nil)
-        let isPresentingInAddNewLog = presentingViewController is UINavigationController
+        let isPresentingInAddNewLog = presentingViewController is AddNewLogViewController
         if isPresentingInAddNewLog{
             dismissViewControllerAnimated(true, completion: nil)
         }

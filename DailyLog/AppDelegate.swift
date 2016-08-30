@@ -51,10 +51,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     }
 
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
-        //let initialVC = tabBarContrㅗㅗoller.viewControllers![0] as! LogListViewController
         let initialVC = tabBarController.viewControllers![0] as! DailyListViewController
-        if viewController is ViewController {
-            let newVC = tabBarController.storyboard?.instantiateViewControllerWithIdentifier("addNewWork") as! ViewController
+        if viewController is AddNewLogViewController {
+            let newVC = tabBarController.storyboard?.instantiateViewControllerWithIdentifier("addNewWork") as! AddNewLogViewController
             //let newVC = tabBarController.viewControllers![1] as! ViewController
             newVC.delegate = initialVC
                 tabBarController.presentViewController(newVC, animated: true, completion: nil)

@@ -1,5 +1,5 @@
 //
-//  basicCollectionViewCell.swift
+//  BasicCollectionViewCell.swift
 //  DailyLog
 //
 //  Created by KangKyungwon on 2016. 7. 18..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class basicCollectionViewCell: UICollectionViewCell {
+class BasicCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var dailyTableView: UITableView!
     

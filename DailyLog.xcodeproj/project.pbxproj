@@ -10,18 +10,17 @@
 		451DF4A41D34D7D30060F380 /* coreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4A21D34D7D30060F380 /* coreDataModel.xcdatamodeld */; };
 		451DF4BB1D37524A0060F380 /* WorkLogInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4B91D37524A0060F380 /* WorkLogInfo+CoreDataProperties.swift */; };
 		451DF4BC1D37524A0060F380 /* WorkLogInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4BA1D37524A0060F380 /* WorkLogInfo.swift */; };
-		451DF4FE1D3CD8920060F380 /* basicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4FD1D3CD8920060F380 /* basicCollectionViewCell.swift */; };
+		451DF4FE1D3CD8920060F380 /* BasicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4FD1D3CD8920060F380 /* BasicCollectionViewCell.swift */; };
 		451DF5001D3CE2E20060F380 /* DailyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DF4FF1D3CE2E20060F380 /* DailyListViewController.swift */; };
 		453FE8D51D670B71000DAA89 /* LogDatailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453FE8D41D670B71000DAA89 /* LogDatailTableViewController.swift */; };
 		45A6B7A51D3F28470074671B /* dailyDataUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6B7A41D3F28470074671B /* dailyDataUnit.swift */; };
 		45AC90681D24E7A600751E31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90671D24E7A600751E31 /* AppDelegate.swift */; };
-		45AC906A1D24E7A600751E31 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90691D24E7A600751E31 /* ViewController.swift */; };
+		45AC906A1D24E7A600751E31 /* AddNewLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90691D24E7A600751E31 /* AddNewLogViewController.swift */; };
 		45AC906D1D24E7A600751E31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45AC906B1D24E7A600751E31 /* Main.storyboard */; };
 		45AC906F1D24E7A600751E31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45AC906E1D24E7A600751E31 /* Assets.xcassets */; };
 		45AC90721D24E7A600751E31 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45AC90701D24E7A600751E31 /* LaunchScreen.storyboard */; };
 		45AC907D1D24E7A600751E31 /* DailyLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC907C1D24E7A600751E31 /* DailyLogTests.swift */; };
 		45AC90881D24E7A600751E31 /* DailyLogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90871D24E7A600751E31 /* DailyLogUITests.swift */; };
-		45AC90961D2901FA00751E31 /* LogListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90951D2901FA00751E31 /* LogListViewController.swift */; };
 		45AC90981D29050F00751E31 /* LogListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90971D29050F00751E31 /* LogListTableViewCell.swift */; };
 		45AC909A1D290EDF00751E31 /* DailyLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC90991D290EDF00751E31 /* DailyLog.swift */; };
 		45AE738D1D2CB23500BF0C1D /* LogInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE738C1D2CB23500BF0C1D /* LogInfoCell.swift */; };
@@ -51,13 +50,13 @@
 		451DF4A31D34D7D30060F380 /* coreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		451DF4B91D37524A0060F380 /* WorkLogInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkLogInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		451DF4BA1D37524A0060F380 /* WorkLogInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkLogInfo.swift; sourceTree = "<group>"; };
-		451DF4FD1D3CD8920060F380 /* basicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = basicCollectionViewCell.swift; sourceTree = "<group>"; };
+		451DF4FD1D3CD8920060F380 /* BasicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicCollectionViewCell.swift; sourceTree = "<group>"; };
 		451DF4FF1D3CE2E20060F380 /* DailyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyListViewController.swift; sourceTree = "<group>"; };
 		453FE8D41D670B71000DAA89 /* LogDatailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogDatailTableViewController.swift; sourceTree = "<group>"; };
 		45A6B7A41D3F28470074671B /* dailyDataUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dailyDataUnit.swift; sourceTree = "<group>"; };
 		45AC90641D24E7A600751E31 /* DailyLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45AC90671D24E7A600751E31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		45AC90691D24E7A600751E31 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		45AC90691D24E7A600751E31 /* AddNewLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewLogViewController.swift; sourceTree = "<group>"; };
 		45AC906C1D24E7A600751E31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		45AC906E1D24E7A600751E31 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45AC90711D24E7A600751E31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -68,7 +67,6 @@
 		45AC90831D24E7A600751E31 /* DailyLogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyLogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		45AC90871D24E7A600751E31 /* DailyLogUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogUITests.swift; sourceTree = "<group>"; };
 		45AC90891D24E7A600751E31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		45AC90951D2901FA00751E31 /* LogListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogListViewController.swift; sourceTree = "<group>"; };
 		45AC90971D29050F00751E31 /* LogListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogListTableViewCell.swift; sourceTree = "<group>"; };
 		45AC90991D290EDF00751E31 /* DailyLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyLog.swift; sourceTree = "<group>"; };
 		45AE738C1D2CB23500BF0C1D /* LogInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInfoCell.swift; sourceTree = "<group>"; };
@@ -102,6 +100,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45AA1B111D755794005A437A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45AC90691D24E7A600751E31 /* AddNewLogViewController.swift */,
+				451DF4FF1D3CE2E20060F380 /* DailyListViewController.swift */,
+				453FE8D41D670B71000DAA89 /* LogDatailTableViewController.swift */,
+				45F9CE0F1D332CCD004657A7 /* ColorSelectionTableViewController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		45AA1B121D75581E005A437A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				45AC90971D29050F00751E31 /* LogListTableViewCell.swift */,
+				451DF4FD1D3CD8920060F380 /* BasicCollectionViewCell.swift */,
+				45F9CE111D33314C004657A7 /* ColorSelectionTableViewCell.swift */,
+				45AC90991D290EDF00751E31 /* DailyLog.swift */,
+				45AE738C1D2CB23500BF0C1D /* LogInfoCell.swift */,
+				45F9CE131D3335A0004657A7 /* color.swift */,
+				45A6B7A41D3F28470074671B /* dailyDataUnit.swift */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 		45AC905B1D24E7A600751E31 = {
 			isa = PBXGroup;
 			children = (
@@ -132,19 +155,9 @@
 				45AC90701D24E7A600751E31 /* LaunchScreen.storyboard */,
 				45AC90731D24E7A600751E31 /* Info.plist */,
 				45AC906B1D24E7A600751E31 /* Main.storyboard */,
-				45AC90691D24E7A600751E31 /* ViewController.swift */,
-				451DF4FF1D3CE2E20060F380 /* DailyListViewController.swift */,
-				453FE8D41D670B71000DAA89 /* LogDatailTableViewController.swift */,
-				45AC90971D29050F00751E31 /* LogListTableViewCell.swift */,
-				45AC90991D290EDF00751E31 /* DailyLog.swift */,
-				45AE738C1D2CB23500BF0C1D /* LogInfoCell.swift */,
-				45F9CE0F1D332CCD004657A7 /* ColorSelectionTableViewController.swift */,
-				45F9CE111D33314C004657A7 /* ColorSelectionTableViewCell.swift */,
-				45F9CE131D3335A0004657A7 /* color.swift */,
-				451DF4FD1D3CD8920060F380 /* basicCollectionViewCell.swift */,
+				45AA1B111D755794005A437A /* ViewController */,
+				45AA1B121D75581E005A437A /* Classes */,
 				451DF4A21D34D7D30060F380 /* coreDataModel.xcdatamodeld */,
-				45A6B7A41D3F28470074671B /* dailyDataUnit.swift */,
-				45AC90951D2901FA00751E31 /* LogListViewController.swift */,
 			);
 			path = DailyLog;
 			sourceTree = "<group>";
@@ -299,9 +312,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				451DF4A41D34D7D30060F380 /* coreDataModel.xcdatamodeld in Sources */,
-				451DF4FE1D3CD8920060F380 /* basicCollectionViewCell.swift in Sources */,
-				45AC906A1D24E7A600751E31 /* ViewController.swift in Sources */,
-				45AC90961D2901FA00751E31 /* LogListViewController.swift in Sources */,
+				451DF4FE1D3CD8920060F380 /* BasicCollectionViewCell.swift in Sources */,
+				45AC906A1D24E7A600751E31 /* AddNewLogViewController.swift in Sources */,
 				45AC909A1D290EDF00751E31 /* DailyLog.swift in Sources */,
 				45AC90981D29050F00751E31 /* LogListTableViewCell.swift in Sources */,
 				45F9CE121D33314C004657A7 /* ColorSelectionTableViewCell.swift in Sources */,

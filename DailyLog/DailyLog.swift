@@ -24,5 +24,6 @@ class DailyLog {
         self.endTime = endTime
         self.during = during
         self.color = color
+        
     }
 }
