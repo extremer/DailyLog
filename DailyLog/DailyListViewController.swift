@@ -25,7 +25,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     var during: String?
     
     var dailyData = [dailyDataUnit]()
-    var dailyLogs = [DailyLog]()
+    
     var dailyLogObjects = [NSManagedObject]()
     var selectedCellIndexPath: NSIndexPath?
     var selectedCellTag: Int?
@@ -46,6 +46,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         // DailyData를 CoreData에 저장해야함 
         // var date: NSDate!
         // var logs: [DailyLog]
+        var dailyLogs = [DailyLog]()
         context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         entity = NSEntityDescription.entityForName("WorkLogInfo", inManagedObjectContext: context)
         
@@ -53,12 +54,10 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         do {
             let results = try context.executeFetchRequest(fetchRequest)
             dailyLogObjects = results as! [WorkLogInfo]
-            dailyLogs.removeAll()
 
             for eachObject in dailyLogObjects {
                 //context.deleteObject(eachObject)
-                dailyLogs += [workLogInfoToDailyLog(eachObject as! WorkLogInfo)]
-                
+                dailyLogs += [workLogInfoToDailyLog(eachObject as! WorkLogInfo)]   
             }
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
@@ -399,30 +398,10 @@ extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, U
         }
     }
     
-    // MARK: LogInfoDelegate @Protocol
+    // MARK: LogInfoDelegate
     func writeLogInfo(date: NSDate, workName:String, startTime:String, endTime:String, during:String, color: UIColor) {
         let newLog = DailyLog.init(date: date, work: workName, startTime: startTime, endTime: endTime, during: during, color: color)
         var lastIndex = dailyData.endIndex - 1
-        
-        // Save Into CoreData
-        let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(color)
-        let managedObject = NSEntityDescription.insertNewObjectForEntityForName("WorkLogInfo", inManagedObjectContext: context) as NSManagedObject
-        managedObject.setValue(date, forKey: "day")
-        managedObject.setValue(colorData, forKey: "color")
-        managedObject.setValue(during, forKey: "during")
-        managedObject.setValue(workName, forKey: "work")
-        managedObject.setValue(startTime, forKey: "startTime")
-        managedObject.setValue(endTime, forKey: "endTime")
-        
-        
-        do {
-            try context.save()
-        }
-        catch let error as NSError{
-            print(error)
-        }
-        
-        dailyLogObjects += [managedObject]
         
         // DailyData 에 추가
         if dailyData.count == 0 {
@@ -455,5 +434,24 @@ extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, U
         }
         newItemAdded = true
         collectionView.reloadData()
+        
+        // Save Into CoreData
+        let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(color)
+        let managedObject = NSEntityDescription.insertNewObjectForEntityForName("WorkLogInfo", inManagedObjectContext: context) as NSManagedObject
+        managedObject.setValue(date, forKey: "day")
+        managedObject.setValue(colorData, forKey: "color")
+        managedObject.setValue(during, forKey: "during")
+        managedObject.setValue(workName, forKey: "work")
+        managedObject.setValue(startTime, forKey: "startTime")
+        managedObject.setValue(endTime, forKey: "endTime")
+        
+        do {
+            try context.save()
+        }
+        catch let error as NSError{
+            print(error)
+        }
+        
+        dailyLogObjects += [managedObject]
     }
 }

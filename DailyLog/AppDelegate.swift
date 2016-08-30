@@ -54,7 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         let initialVC = tabBarController.viewControllers![0] as! DailyListViewController
         if viewController is AddNewLogViewController {
             let newVC = tabBarController.storyboard?.instantiateViewControllerWithIdentifier("addNewWork") as! AddNewLogViewController
-            //let newVC = tabBarController.viewControllers![1] as! ViewController
             newVC.delegate = initialVC
                 tabBarController.presentViewController(newVC, animated: true, completion: nil)
                 return false
