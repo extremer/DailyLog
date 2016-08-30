@@ -39,6 +39,7 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
         colorButton.backgroundColor = logData?.color
     }
     
+
     override func viewDidLayoutSubviews() {
         if viewDidLayoutSubviewsComplete == false {
             // startTime, endTime이 nil이 아니면 datePicker에 setting
@@ -86,6 +87,22 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
         return dateComponentsFormatter.stringFromTimeInterval(time)
     }
     
+    func limitDatePicker() {
+        
+        startDatePicker.maximumDate = endDatePicker.date;
+        endDatePicker.minimumDate = startDatePicker.date;
+        //    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        //    NSDate *currentDate = [NSDate date];
+        //    NSDateComponents *comps = [[NSDateComponents alloc] init];
+        //    [comps setYear:30];
+        //    NSDate *maxDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
+        //    [comps setYear:-30];
+        //    NSDate *minDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
+        //
+        //    [datePicker setMaximumDate:maxDate];
+        //    [datePicker setMinimumDate:minDate];
+    }
+    
     // MARK: Action
     @IBAction func startPickerChanged(sender: AnyObject) {
         // startTime을 바꿔줌 text, data
@@ -94,6 +111,7 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
         
         let diff = endDatePicker.date.timeIntervalSinceDate(startDatePicker.date)
         duringTemp = timeIntervalToString(diff)
+        limitDatePicker();
     }
     
     @IBAction func endPickerChanged(sender: AnyObject) {
@@ -102,7 +120,9 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
         
         let diff = endDatePicker.date.timeIntervalSinceDate(startDatePicker.date)
         duringTemp = timeIntervalToString(diff)
+        limitDatePicker();
     }
+    
     
     // MARK: tableView
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
