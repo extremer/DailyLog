@@ -16,7 +16,7 @@ class BasicCollectionViewCell: UICollectionViewCell {
         (dataSourceDelegate: D, forIndex index: Int) {
         dailyTableView.delegate = dataSourceDelegate
         dailyTableView.dataSource = dataSourceDelegate
-        dailyTableView.tag = index    //??
+        dailyTableView.tag = index  //상위 CollectionViewCell index를 알아오기 위해
         dailyTableView.reloadData()
     }
 }

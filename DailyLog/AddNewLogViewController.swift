@@ -8,24 +8,24 @@
 
 import UIKit
 
-protocol logInfoDelegate {
+protocol LogInfoDelegate {
     func writeLogInfo(date: NSDate, workName:String, startTime:String, endTime:String, during:String, color: UIColor)
 }
 
 class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, UITabBarControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: Properties
-    @IBOutlet weak var SWButton: UIButton!
+    @IBOutlet weak var stopWatchButton: UIButton!
     //@IBOutlet weak var workText: UITextField!
     //@IBOutlet weak var colorButton: UIButton!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var workInfoTableView: UITableView!
     
-    var delegate: logInfoDelegate?                      ///////////////////////////////////////////
+    var delegate: LogInfoDelegate?
     var tabbarC: UITabBarController?
     
     var stopWatch = StopWatch()
-    var SWButtonPushed: Bool = false
+    var stopWatchButtonPushed: Bool = false
     var timer: NSTimer?
     var dateFormatter = NSDateFormatter()
     var strStartTime: String?
@@ -45,6 +45,7 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
     }
 
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         let setting = NSUserDefaults.standardUserDefaults()
         let startedTime = setting.valueForKey("startTime")
         let text = setting.valueForKey("text")
@@ -64,20 +65,16 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
                 stopWatch.startTime = startTime as? NSDate
                 strStartTime = dateFormatter.stringFromDate(stopWatch.startTime ?? NSDate())
                 startDate = stopWatch.startTime
-                SWButton.setTitle("중단", forState: .Normal)
-                SWButtonPushed = !SWButtonPushed
+                stopWatchButton.setTitle("중단", forState: .Normal)
+                stopWatchButtonPushed = !stopWatchButtonPushed
             }
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: Action
     @IBAction func pushSWButton(sender: AnyObject) {
-        if SWButtonPushed == false {
+        if stopWatchButtonPushed == false {
             // start SW
             let infoCell = workInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! LogInfoCell
             workName = infoCell.workText.text
@@ -104,15 +101,15 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
                 
                 strStartTime = dateFormatter.stringFromDate(stopWatch.startTime ?? NSDate())
                 startDate = stopWatch.startTime
-                SWButton.setTitle("중단", forState: .Normal)
-                SWButtonPushed = !SWButtonPushed
+                stopWatchButton.setTitle("중단", forState: .Normal)
+                stopWatchButtonPushed = !stopWatchButtonPushed
             }
         }
         else {
             // stop SW
             self.stopWatch.stop()
-            SWButton.setTitle("시작", forState: .Normal)
-            SWButtonPushed = !SWButtonPushed
+            stopWatchButton.setTitle("시작", forState: .Normal)
+            stopWatchButtonPushed = !stopWatchButtonPushed
             
             passTimeData()
             
@@ -224,6 +221,7 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
     
     // MARK: Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender: sender)
         let navC = segue.destinationViewController as! UINavigationController
         let targetVC = navC.topViewController as! ColorSelectionTableViewController
         targetVC.selectedRow = buttonColorIndex

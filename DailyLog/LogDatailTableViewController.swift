@@ -28,19 +28,21 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     
     var viewDidLayoutSubviewsComplete = false
     
-    let dateFormatter = NSDateFormatter()
+    var dateFormatter = NSDateFormatter()
     
     @IBAction func cancel(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         eventNameTextView.delegate = self
         colorButton.backgroundColor = logData?.color
     }
     
 
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         if viewDidLayoutSubviewsComplete == false {
             // startTime, endTime이 nil이 아니면 datePicker에 setting
             if let log = logData {
@@ -88,25 +90,13 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     }
     
     func limitDatePicker() {
-        
         startDatePicker.maximumDate = endDatePicker.date;
         endDatePicker.minimumDate = startDatePicker.date;
-        //    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        //    NSDate *currentDate = [NSDate date];
-        //    NSDateComponents *comps = [[NSDateComponents alloc] init];
-        //    [comps setYear:30];
-        //    NSDate *maxDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
-        //    [comps setYear:-30];
-        //    NSDate *minDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
-        //
-        //    [datePicker setMaximumDate:maxDate];
-        //    [datePicker setMinimumDate:minDate];
     }
     
     // MARK: Action
     @IBAction func startPickerChanged(sender: AnyObject) {
         // startTime을 바꿔줌 text, data
-        dateFormatter.dateFormat = "h:mm:ss a"
         startTimeTextField.text = dateFormatter.stringFromDate(startDatePicker.date)
         
         let diff = endDatePicker.date.timeIntervalSinceDate(startDatePicker.date)
@@ -115,7 +105,6 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     }
     
     @IBAction func endPickerChanged(sender: AnyObject) {
-        dateFormatter.dateFormat = "h:mm:ss a"
         endTimeTextField.text = dateFormatter.stringFromDate(endDatePicker.date)
         
         let diff = endDatePicker.date.timeIntervalSinceDate(startDatePicker.date)
@@ -151,8 +140,8 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
   
     // MARK: UITextViewDelegate
     func textViewDidChange(textView: UITextView) {
+        // text없으면 저장 비활성화
         saveButton.enabled = !(eventNameTextView.text.isEmpty)
-        
     }
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
@@ -164,6 +153,7 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     
     // MARK: Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender: sender)
         if segue.identifier == "SelectColor" {
             let targetVC = segue.destinationViewController as! ColorSelectionTableViewController
             
@@ -181,7 +171,6 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
         if let sourceViewController = sender.sourceViewController as? ColorSelectionTableViewController {
             if let selectedColor = sourceViewController.selectedColor {
                 let buttonColor = selectedColor.color
-                //buttonColorIndex = sourceViewController.selectedRow
                 colorButton.backgroundColor = buttonColor
             }
         }

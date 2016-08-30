@@ -11,8 +11,8 @@ import UIKit
 class ColorSelectionTableViewController: UITableViewController {
     // MARK: Properties
     
-    var colors = [color]()
-    var selectedColor: color?
+    var colors = [Color]()
+    var selectedColor: Color?
     var selectedRow: Int!
     
     @IBAction func cancel(sender: UIBarButtonItem) {
@@ -24,13 +24,13 @@ class ColorSelectionTableViewController: UITableViewController {
         else{
             // 네비게이션 스택에서 가장 위 meal scene의 view Controller를 pop
             navigationController!.popViewControllerAnimated(true)
-            
         }
     }
 
     // MARK: Initialization
     override func viewDidLoad() {
-        let color0 = color.init(color: UIColor.darkGrayColor(), colorName: "기본색상")
+        super.viewDidLoad()
+        let color0 = Color.init(color: UIColor.darkGrayColor(), colorName: "기본색상")
         let color1 = RGBToUIColor(213, green: 28, blue: 59, name: "빨간색")
         let color2 = RGBToUIColor(213, green: 97, blue: 29, name: "주황색")
         let color3 = RGBToUIColor(28, green: 43, blue: 213, name: "파랑색")
@@ -48,11 +48,10 @@ class ColorSelectionTableViewController: UITableViewController {
     }
     
     // MARK: Function
-    func RGBToUIColor(red: Float, green: Float, blue: Float, name: String) -> color {
+    func RGBToUIColor(red: Float, green: Float, blue: Float, name: String) -> Color {
         let uic = UIColor.init(colorLiteralRed: red/255.0, green: green/255.0, blue: blue/255.0, alpha: 1)
-        let c = color.init(color: uic, colorName: name)
+        let c = Color.init(color: uic, colorName: name)
         return c
-        
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

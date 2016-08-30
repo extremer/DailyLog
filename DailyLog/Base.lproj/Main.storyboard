@@ -173,7 +173,7 @@
                     <tabBarItem key="tabBarItem" title="Add New Log" id="13f-fy-czN"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="SWButton" destination="9fn-E2-ESz" id="bjK-q6-TRf"/>
+                        <outlet property="stopWatchButton" destination="9fn-E2-ESz" id="YRo-aR-Sax"/>
                         <outlet property="timerLabel" destination="mi9-5Q-sen" id="ihZ-TF-kQJ"/>
                         <outlet property="workInfoTableView" destination="ThT-Se-cW9" id="Hd1-uQ-xGC"/>
                     </connections>

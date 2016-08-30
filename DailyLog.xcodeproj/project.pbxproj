@@ -26,7 +26,7 @@
 		45AE738D1D2CB23500BF0C1D /* LogInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE738C1D2CB23500BF0C1D /* LogInfoCell.swift */; };
 		45F9CE101D332CCD004657A7 /* ColorSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F9CE0F1D332CCD004657A7 /* ColorSelectionTableViewController.swift */; };
 		45F9CE121D33314C004657A7 /* ColorSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F9CE111D33314C004657A7 /* ColorSelectionTableViewCell.swift */; };
-		45F9CE141D3335A0004657A7 /* color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F9CE131D3335A0004657A7 /* color.swift */; };
+		45F9CE141D3335A0004657A7 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F9CE131D3335A0004657A7 /* Color.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,7 +72,7 @@
 		45AE738C1D2CB23500BF0C1D /* LogInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInfoCell.swift; sourceTree = "<group>"; };
 		45F9CE0F1D332CCD004657A7 /* ColorSelectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSelectionTableViewController.swift; sourceTree = "<group>"; };
 		45F9CE111D33314C004657A7 /* ColorSelectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSelectionTableViewCell.swift; sourceTree = "<group>"; };
-		45F9CE131D3335A0004657A7 /* color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = color.swift; sourceTree = "<group>"; };
+		45F9CE131D3335A0004657A7 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +119,7 @@
 				45F9CE111D33314C004657A7 /* ColorSelectionTableViewCell.swift */,
 				45AC90991D290EDF00751E31 /* DailyLog.swift */,
 				45AE738C1D2CB23500BF0C1D /* LogInfoCell.swift */,
-				45F9CE131D3335A0004657A7 /* color.swift */,
+				45F9CE131D3335A0004657A7 /* Color.swift */,
 				45A6B7A41D3F28470074671B /* dailyDataUnit.swift */,
 			);
 			name = Classes;
@@ -318,7 +318,7 @@
 				45AC90981D29050F00751E31 /* LogListTableViewCell.swift in Sources */,
 				45F9CE121D33314C004657A7 /* ColorSelectionTableViewCell.swift in Sources */,
 				45AE738D1D2CB23500BF0C1D /* LogInfoCell.swift in Sources */,
-				45F9CE141D3335A0004657A7 /* color.swift in Sources */,
+				45F9CE141D3335A0004657A7 /* Color.swift in Sources */,
 				45A6B7A51D3F28470074671B /* dailyDataUnit.swift in Sources */,
 				45AC90681D24E7A600751E31 /* AppDelegate.swift in Sources */,
 				451DF5001D3CE2E20060F380 /* DailyListViewController.swift in Sources */,

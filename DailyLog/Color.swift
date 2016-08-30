@@ -1,5 +1,5 @@
 //
-//  color.swift
+//  Color.swift
 //  DailyLog
 //
 //  Created by KangKyungwon on 2016. 7. 11..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class color {
+class Color {
     var color: UIColor
     var colorName: String
     
