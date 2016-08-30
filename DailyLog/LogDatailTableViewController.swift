@@ -37,9 +37,6 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     override func viewDidLoad() {
         eventNameTextView.delegate = self
         colorButton.backgroundColor = logData?.color
-        
-        // DatePicker Setting
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -95,8 +92,6 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
         dateFormatter.dateFormat = "h:mm:ss a"
         startTimeTextField.text = dateFormatter.stringFromDate(startDatePicker.date)
         
-        // during 다시 계산
-//        let components = calendar.components(flags, fromDate: date1, toDate: date2, options: [])
         let diff = endDatePicker.date.timeIntervalSinceDate(startDatePicker.date)
         duringTemp = timeIntervalToString(diff)
     }
@@ -168,13 +163,6 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
                 let buttonColor = selectedColor.color
                 //buttonColorIndex = sourceViewController.selectedRow
                 colorButton.backgroundColor = buttonColor
-                
-//                let infoCell = workInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! LogInfoCell
-//                infoCell.colorButton.backgroundColor = buttonColor
-//                let setting = NSUserDefaults.standardUserDefaults()
-//                let colorData = NSKeyedArchiver.archivedDataWithRootObject(buttonColor)
-//                setting.setObject(colorData, forKey: "color")
-//                setting.synchronize()
             }
         }
     }

@@ -53,15 +53,15 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
         if let startTime = startedTime {
             if let text = text {
                 let infoCell = workInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! LogInfoCell
-                infoCell.workText.text = text as! String
+                infoCell.workText.text = text as? String
                 
                 if let colorData = colorData {
                     let color = NSKeyedUnarchiver.unarchiveObjectWithData(colorData as! NSData)
-                    infoCell.colorButton.backgroundColor = color as! UIColor
+                    infoCell.colorButton.backgroundColor = color as? UIColor
                 }
                 // stopwatch 진행
                 stopWatch.start()
-                stopWatch.startTime = startTime as! NSDate
+                stopWatch.startTime = startTime as? NSDate
                 strStartTime = dateFormatter.stringFromDate(stopWatch.startTime ?? NSDate())
                 startDate = stopWatch.startTime
                 SWButton.setTitle("중단", forState: .Normal)
@@ -227,7 +227,6 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
         let navC = segue.destinationViewController as! UINavigationController
         let targetVC = navC.topViewController as! ColorSelectionTableViewController
         targetVC.selectedRow = buttonColorIndex
-        //targetVC.selectedColor = buttonColor
     }
     
     @IBAction func unwindToNewLog(sender: UIStoryboardSegue) {
