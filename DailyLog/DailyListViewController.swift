@@ -27,7 +27,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     var dailyData = [dailyDataUnit]()
     
     var dailyLogObjects = [NSManagedObject]()
-    var selectedCellIndexPath: NSIndexPath?
+    var selectedCellIndexPath: IndexPath?
     var selectedCellTag: Int?
     var selectedObjectIndex: Int?
     
@@ -204,10 +204,12 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cellIdentifier = "basicCollectionViewCell"
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath as IndexPath) as! BasicCollectionViewCell
         cell.logs = dailyData[indexPath.row].logs
         cell.tableViewTag = indexPath.row
+        cell.delegate = self
+        cell.dailyTableView.reloadData()
+
         return cell
     }
     
@@ -237,9 +239,10 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
             }
         }
     }
-    
-    func performSegueWith(ID: String)
+    func performSegueWith(ID: String, selectedTag: Int, selectedIndexPath: IndexPath)
     {
+        selectedCellTag = selectedTag
+        selectedCellIndexPath = selectedIndexPath
         performSegue(withIdentifier: "ShowDetail", sender: self)
     }
     // unwind segue
@@ -382,7 +385,8 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
             }
         }
         if let displayedCollectionViewCell = displayedCollectionViewCell {
-            let date = dailyData[displayedCollectionViewCell.tableViewTag].date
+            let date = dailyData[displayedCollectionViewCell.tableViewTag!].date
+            
             let dateTransform = DateFormatter.init()
             dateTransform.dateFormat = "yyyy.MM.dd"
             shownDateTextField.text = dateTransform.string(from: date as! Date)

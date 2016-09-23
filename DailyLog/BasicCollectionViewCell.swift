@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SegueDelegate {
-    func performSegueWith(ID: String)
+    func performSegueWith(ID: String, selectedTag: Int, selectedIndexPath: IndexPath)
 }
 
 class BasicCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource {
@@ -49,7 +49,7 @@ class BasicCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // segue 호출
-        delegate?.performSegueWith(ID: "ShowDetail")
+        delegate?.performSegueWith(ID: "ShowDetail", selectedTag: tableViewTag, selectedIndexPath: indexPath)
     }
     
     func changeTimeFormatToShow(time: String) -> String? {
