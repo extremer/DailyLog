@@ -37,6 +37,7 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         eventNameTextView.delegate = self
+        eventNameTextView.isScrollEnabled = false
         colorButton.backgroundColor = logData?.color
     }
     
@@ -49,6 +50,7 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
                 eventNameTextView.text = log.work
                 startTimeTextField.text = log.startTime!
                 endTimeTextField.text = log.endTime!
+                eventNameTextView.frame = calculateTextViewHeight(textView: eventNameTextView)
                 
                 dateFormatter.dateFormat = "h:mm:ss a"
                 let startDate = dateFormatter.date(from: log.startTime!)
@@ -63,6 +65,7 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
                 duringTemp = timeIntervalToString(time: diff)
             }
             viewDidLayoutSubviewsComplete = true
+            tableView.reloadData()
         }
     }
     
@@ -92,6 +95,16 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     func limitDatePicker() {
         startDatePicker.maximumDate = endDatePicker.date;
         endDatePicker.minimumDate = startDatePicker.date;
+    }
+    
+    func calculateTextViewHeight(textView: UITextView) -> CGRect {
+        // textView의 가로길이는 고정하고 세로 길이를 구함
+        // sizeThatFits: return 'best' size to fit given size. does not actually resize view. Default is return existing view size
+        let fixedWidth = textView.frame.size.width
+        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        var newFrame = textView.frame
+        newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+        return newFrame
     }
     
     // MARK: Action
@@ -127,7 +140,10 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
         }
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if startPickerHidden && indexPath.section == 1 && indexPath.row == 1 {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            // textView height에 따라 바뀜 
+             return eventNameTextView.frame.height
+        } else if startPickerHidden && indexPath.section == 1 && indexPath.row == 1 {
             return 0
         } else if endPickerHidden && indexPath.section == 1 && indexPath.row == 3 {
             return 0
@@ -138,9 +154,23 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     
   
     // MARK: UITextViewDelegate
+    
     func textViewDidChange(_ textView: UITextView) {
         // text없으면 저장 비활성화
         saveButton.isEnabled = !(eventNameTextView.text.isEmpty)
+        let newFrame = calculateTextViewHeight(textView: textView)
+        if newFrame.height != textView.frame.height {
+            
+            textView.frame = newFrame
+  //          textView.layoutIfNeeded()
+            textView.updateConstraints()
+            textView.sizeToFit()
+            tableView.beginUpdates()
+            tableView.endUpdates()
+
+   //     tableView.reloadData()
+          //  textView.becomeFirstResponder()
+        }
     }
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
