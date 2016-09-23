@@ -28,10 +28,10 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     
     var viewDidLayoutSubviewsComplete = false
     
-    var dateFormatter = NSDateFormatter()
+    var dateFormatter = DateFormatter()
     
     @IBAction func cancel(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -51,16 +51,16 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
                 endTimeTextField.text = log.endTime!
                 
                 dateFormatter.dateFormat = "h:mm:ss a"
-                let startDate = dateFormatter.dateFromString(log.startTime!)
-                let endDate = dateFormatter.dateFromString(log.endTime!)
+                let startDate = dateFormatter.date(from: log.startTime!)
+                let endDate = dateFormatter.date(from: log.endTime!)
                 if let startDate = startDate {
                     startDatePicker.date = startDate
                 }
                 if let endDate = endDate {
                     endDatePicker.date = endDate
                 }
-                let diff = endDatePicker.date.timeIntervalSinceDate(startDatePicker.date)
-                duringTemp = timeIntervalToString(diff)
+                let diff = endDatePicker.date.timeIntervalSince(startDatePicker.date)
+                duringTemp = timeIntervalToString(time: diff)
             }
             viewDidLayoutSubviewsComplete = true
         }
@@ -82,11 +82,11 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
         tableView.endUpdates()
     }
     
-    func timeIntervalToString(time: NSTimeInterval) -> String? {
-        let dateComponentsFormatter = NSDateComponentsFormatter()
-        dateComponentsFormatter.zeroFormattingBehavior = .Pad
-        dateComponentsFormatter.allowedUnits = [NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second]
-        return dateComponentsFormatter.stringFromTimeInterval(time)
+    func timeIntervalToString(time: TimeInterval) -> String? {
+        let dateComponentsFormatter = DateComponentsFormatter()
+        dateComponentsFormatter.zeroFormattingBehavior = .pad
+        dateComponentsFormatter.allowedUnits = [NSCalendar.Unit.hour, NSCalendar.Unit.minute, NSCalendar.Unit.second]
+        return dateComponentsFormatter.string(from: time)
     }
     
     func limitDatePicker() {
@@ -97,53 +97,52 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     // MARK: Action
     @IBAction func startPickerChanged(sender: AnyObject) {
         // startTime을 바꿔줌 text, data
-        startTimeTextField.text = dateFormatter.stringFromDate(startDatePicker.date)
+        startTimeTextField.text = dateFormatter.string(from: startDatePicker.date)
         
-        let diff = endDatePicker.date.timeIntervalSinceDate(startDatePicker.date)
-        duringTemp = timeIntervalToString(diff)
+        let diff = endDatePicker.date.timeIntervalSince(startDatePicker.date)
+        duringTemp = timeIntervalToString(time: diff)
         limitDatePicker();
     }
     
     @IBAction func endPickerChanged(sender: AnyObject) {
-        endTimeTextField.text = dateFormatter.stringFromDate(endDatePicker.date)
+        endTimeTextField.text = dateFormatter.string(from: endDatePicker.date)
         
-        let diff = endDatePicker.date.timeIntervalSinceDate(startDatePicker.date)
-        duringTemp = timeIntervalToString(diff)
+        let diff = endDatePicker.date.timeIntervalSince(startDatePicker.date)
+        duringTemp = timeIntervalToString(time: diff)
         limitDatePicker();
     }
     
     
     // MARK: tableView
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch (indexPath.section, indexPath.row) {
         case (1, 0):
             toggleStartPicker()
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
         case (1, 2):
             toggleEndPicker()
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
         default:
             ()
         }
     }
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if startPickerHidden && indexPath.section == 1 && indexPath.row == 1 {
             return 0
         } else if endPickerHidden && indexPath.section == 1 && indexPath.row == 3 {
             return 0
         } else {
-            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+            return super.tableView(tableView, heightForRowAt: indexPath)
         }
     }
     
   
     // MARK: UITextViewDelegate
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         // text없으면 저장 비활성화
-        saveButton.enabled = !(eventNameTextView.text.isEmpty)
+        saveButton.isEnabled = !(eventNameTextView.text.isEmpty)
     }
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             textView.resignFirstResponder()
             return false
@@ -152,10 +151,11 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     }
     
     // MARK: Segue
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        super.prepareForSegue(segue, sender: sender)
+    //func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
         if segue.identifier == "SelectColor" {
-            let targetVC = segue.destinationViewController as! ColorSelectionTableViewController
+            let targetVC = segue.destination as! ColorSelectionTableViewController
             
             targetVC.selectedRow = 0    //buttonColorIndex
         } else if segue.identifier == "SaveLog" {
@@ -168,7 +168,7 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     }
     
     @IBAction func unwindToNewLog(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.sourceViewController as? ColorSelectionTableViewController {
+        if let sourceViewController = sender.source as? ColorSelectionTableViewController {
             if let selectedColor = sourceViewController.selectedColor {
                 let buttonColor = selectedColor.color
                 colorButton.backgroundColor = buttonColor

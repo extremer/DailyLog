@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class DailyListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class DailyListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LogInfoDelegate, UIScrollViewDelegate, SegueDelegate {
 
     // MARK: Properties
     @IBOutlet weak var collectionView: UICollectionView!
@@ -17,7 +17,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     
     var context: NSManagedObjectContext!
     var entity: NSEntityDescription!
-    var fetchRequest: NSFetchRequest!
+    var fetchRequest: NSFetchRequest<WorkLogInfo>!
     
     var workText: String?   //
     var startTime: String?
@@ -37,60 +37,61 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     // MARK: Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBarController?.delegate = UIApplication.sharedApplication().delegate as? UITabBarControllerDelegate
+        self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
         
-        let newVC = tabBarController?.viewControllers![1] as! AddNewLogViewController
-        newVC.delegate = self
-        newVC.tabbarC = self.tabBarController!
+//        let newVC = tabBarController?.viewControllers![1] as! AddNewLogViewController
+//        newVC.delegate = self
+//        newVC.tabbarC = self.tabBarController!
         
         // DailyData를 CoreData에 저장해야함 
         // var date: NSDate!
         // var logs: [DailyLog]
         var dailyLogs = [DailyLog]()
-        context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        entity = NSEntityDescription.entityForName("WorkLogInfo", inManagedObjectContext: context)
+        context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        entity = NSEntityDescription.entity(forEntityName: "WorkLogInfo", in: context)
         
         fetchRequest = NSFetchRequest.init(entityName: "WorkLogInfo")
         do {
-            let results = try context.executeFetchRequest(fetchRequest)
+            
+            let results = try context.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
             dailyLogObjects = results as! [WorkLogInfo]
 
             for eachObject in dailyLogObjects {
                 //context.deleteObject(eachObject)
-                dailyLogs += [workLogInfoToDailyLog(eachObject as! WorkLogInfo)]   
+                dailyLogs += [workLogInfoToDailyLog(info: eachObject as! WorkLogInfo)]   
             }
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
 
-        dailyData = bindingLogsDaily(dailyLogs)
+        dailyData = bindingLogsDaily(logs: dailyLogs)
         dailyLogs.removeAll()
+        
+       // collectionView.reloadData()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
         if firstViewLayout == false {
-            let numbOfItems = collectionView.numberOfItemsInSection(0)
+            let numbOfItems = collectionView.numberOfItems(inSection: 0)
             view.layoutIfNeeded()
             if numbOfItems != 0 {
-                let scrollIndex = NSIndexPath.init(forRow: numbOfItems-1, inSection: 0)
-                collectionView.scrollToItemAtIndexPath(scrollIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: false)
-                
-                let dateTransform = NSDateFormatter.init()
-                dateTransform.dateFormat = "yyyy.MM.dd"
-                //if let date = lasDateInCoreData {}
-                let date = NSDate()
-                shownDateTextField.text = dateTransform.stringFromDate(date)
-                
+                let scrollIndex = IndexPath.init(row: numbOfItems-1, section: 0)
+                collectionView.scrollToItem(at: scrollIndex, at: UICollectionViewScrollPosition.right, animated: false)
             }
+            let dateTransform = DateFormatter.init()
+            dateTransform.dateFormat = "yyyy.MM.dd"
+            let date = NSDate()
+            shownDateTextField.text = dateTransform.string(from: date as Date)
+            
             firstViewLayout = true
         }
         if newItemAdded == true {
             collectionView.layoutIfNeeded() //이거 대박
-            let numbOfItems = collectionView.numberOfItemsInSection(0)
-            let scrollIndex = NSIndexPath.init(forRow: numbOfItems-1, inSection: 0)
-            collectionView.scrollToItemAtIndexPath(scrollIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: false)
+            let numbOfItems = collectionView.numberOfItems(inSection: 0)
+            let scrollIndex = IndexPath.init(row: numbOfItems-1, section: 0)
+            collectionView.scrollToItem(at: scrollIndex, at: UICollectionViewScrollPosition.right, animated: false)
             newItemAdded = false
         }
         //LogListTableView.reloadData()
@@ -106,60 +107,30 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         }
     }
     func deleteData(context: NSManagedObjectContext, object: NSManagedObject) {
-        context.deleteObject(object)
-        saveCoreData(context)
+        context.delete(object)
+        saveCoreData(context: context)
     }
     
     func workLogInfoToDailyLog(info: WorkLogInfo) -> DailyLog {
-        let color: UIColor = NSKeyedUnarchiver.unarchiveObjectWithData(info.color!) as! UIColor
+        let color: UIColor = NSKeyedUnarchiver.unarchiveObject(with: info.color! as Data) as! UIColor
         let newLog = DailyLog.init(date: info.day!, work: info.work!, startTime: info.startTime, endTime: info.endTime, during: info.during, color: color)
         return newLog
-    }
-    
-    func changeTimeFormatToShow(time: String) -> String? {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss"
-        let date: NSDate? = dateFormatter.dateFromString(time)
-        if let date = date {
-            dateFormatter.dateFormat = "H"
-            let hour = dateFormatter.stringFromDate(date)
-            
-            dateFormatter.dateFormat = "m"
-            let min = dateFormatter.stringFromDate(date)
-            
-            dateFormatter.dateFormat = "s"
-            let sec = dateFormatter.stringFromDate(date)
-            
-            if hour == "0" {
-                if min == "0" {
-                    let strTime = "\(sec)초"
-                    return strTime
-                }
-                else {
-                    let strTime = "\(min)분 \(sec)초"
-                    return strTime
-                }
-            }
-            else {
-                let strTime = "\(hour)시간 \(min)분"
-                return strTime
-            }
-        }
-        return nil
     }
     
     func genNSDateArray () -> [dailyDataUnit] {
         var genArray = [dailyDataUnit]()
 
-        let calendar = NSCalendar.currentCalendar()
+        let calendar = NSCalendar.current
         let offset = NSDateComponents.init()
         let today = NSDate()
         
         for i in -30...30 {
-            offset.setValue(i, forComponent: .Day)
-            let day = calendar.dateByAddingComponents(offset, toDate: today, options: .MatchStrictly)
+            offset.setValue(i, forComponent: .day)
+            //let day = calendar.date(byAdding: offset as DateComponents, to: today as Date, wrappingComponents: .matchStrictly)
+            let day = calendar.date(byAdding: offset as DateComponents, to: today as Date)
+            
             //genArray.append([(day!, empty)])
-            genArray.append(dailyDataUnit.init(date: day!, logs: []))
+            genArray.append(dailyDataUnit.init(date: day! as NSDate, logs: []))
         }
         return genArray
     }
@@ -178,23 +149,23 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
                     let lastIndex = newDailyData.endIndex - 1
                     let lastIndexDate = newDailyData[lastIndex].date
                     
-                    var order = NSCalendar.currentCalendar().compareDate(date, toDate: lastIndexDate, toUnitGranularity: .Day)
-                    if order == NSComparisonResult.OrderedSame {
+                    var order = NSCalendar.current.compare(date as Date, to: lastIndexDate as! Date, toGranularity: .day)
+                    //var order = NSCalendar.currentCalendar.compareDate(date, toDate: lastIndexDate, toUnitGranularity: .Day)
+                    if order == ComparisonResult.orderedSame {
                         // data의 마지막 날짜와 log의 추가하려는 날짜가 같으면
                         newDailyData[lastIndex].logs += [log]
                     }
                     else {
                         // date의 마지막 날짜와 log 추가 날짜가 다르면..
-                        let calendar = NSCalendar.currentCalendar()
+                        let calendar = NSCalendar.current
                         let offset = NSDateComponents.init()
                         var dayAfter = 1
-                        while order != NSComparisonResult.OrderedSame {
-                            offset.setValue(dayAfter, forComponent: .Day)
-                            let day = calendar.dateByAddingComponents(offset, toDate: lastIndexDate
-                                , options: .MatchStrictly)
-                            newDailyData.append(dailyDataUnit.init(date: day!, logs: []))
+                        while order != ComparisonResult.orderedSame {
+                            offset.setValue(dayAfter, forComponent: .day)
+                            let day = calendar.date(byAdding: offset as DateComponents, to: lastIndexDate as! Date)
+                            newDailyData.append(dailyDataUnit.init(date: day! as NSDate, logs: []))
                             dayAfter += 1
-                            order = NSCalendar.currentCalendar().compareDate(date, toDate: day!, toUnitGranularity: .Day)
+                            order = NSCalendar.current.compare(date as Date, to: day!, toGranularity: .day)
                         }
                         let lastIndex = newDailyData.endIndex - 1
                         newDailyData[lastIndex].logs += [log]
@@ -209,70 +180,76 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
             return newDailyData
         }
         let lastIndexDate = newDailyData[lastIndex].date
-        var order = NSCalendar.currentCalendar().compareDate(today, toDate: lastIndexDate, toUnitGranularity: .Day)
+        var order = NSCalendar.current.compare(today as Date, to: lastIndexDate as! Date, toGranularity: .day)
+        
         var dayAfter = 1
-        while order != NSComparisonResult.OrderedSame {
-            let calendar = NSCalendar.currentCalendar()
+        while order != ComparisonResult.orderedSame {
+            let calendar = NSCalendar.current
             let offset = NSDateComponents.init()
-            offset.setValue(dayAfter, forComponent: .Day)
-            let day = calendar.dateByAddingComponents(offset, toDate: lastIndexDate
-                , options: .MatchStrictly)
-            newDailyData.append(dailyDataUnit.init(date: day!, logs: []))
+            offset.setValue(dayAfter, forComponent: .day)
+            let day = calendar.date(byAdding: offset as DateComponents, to: lastIndexDate as! Date)
+
+            newDailyData.append(dailyDataUnit.init(date: day! as NSDate, logs: []))
             dayAfter += 1
-            order = NSCalendar.currentCalendar().compareDate(today, toDate: day!, toUnitGranularity: .Day)
+            order = NSCalendar.current.compare(today as Date, to: day! as Date, toGranularity: .day)
         }
         return newDailyData
     }
     
     // MARK: CollectionView
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //return data.count
         return dailyData.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cellIdentifier = "basicCollectionViewCell"
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! BasicCollectionViewCell
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath as IndexPath) as! BasicCollectionViewCell
+        cell.logs = dailyData[indexPath.row].logs
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        guard let collectionViewCell = cell as? BasicCollectionViewCell else { return }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard cell is BasicCollectionViewCell else { return }
         
-        collectionViewCell.setTableViewDataSourceDelegate(self, forIndex: indexPath.row)
+        //collectionViewCell.setTableViewDataSourceDelegate(dataSourceDelegate: self, forIndex: indexPath.row)
     }
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         collectionView.layoutIfNeeded()
         let size = collectionView.bounds.size
-        return CGSizeMake(size.width, size.height)
+        return CGSize(width: size.width, height: size.height)
     }
     
-    
     // MARK: Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        super.prepareForSegue(segue, sender: sender)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
         if segue.identifier == "ShowDetail"{
-            let naviC = segue.destinationViewController as! UINavigationController
+            let naviC = segue.destination as! UINavigationController
             let detailViewController = naviC.topViewController as! LogDatailTableViewController
             if let selectedCellTag = selectedCellTag{
                 if let selectedCellIndexPath = selectedCellIndexPath{
                     let selectedLog = dailyData[selectedCellTag].logs[selectedCellIndexPath.row]
                     detailViewController.logData = selectedLog
-                    selectedObjectIndex = findIndexOfManagedObject(selectedLog)
+                    selectedObjectIndex = findIndexOfManagedObject(log: selectedLog)
                 }
             }
         }
     }
     
+    func performSegueWith(ID: String)
+    {
+        performSegue(withIdentifier: "ShowDetail", sender: self)
+    }
     // unwind segue
     @IBAction func unwindToLogList(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.sourceViewController as? LogDatailTableViewController {
+        if let sourceViewController = sender.source as? LogDatailTableViewController {
             if sender.identifier == "DeleteLog" {
                 if let selectedCellTag = selectedCellTag{
                     if let selectedCellIndexPath = selectedCellIndexPath{
                         let deletedLog = dailyData[selectedCellTag].logs[selectedCellIndexPath.row]
-                        dailyData[selectedCellTag].logs.removeAtIndex(selectedCellIndexPath.row)
-                        deleteLogInfo(deletedLog)
+                        dailyData[selectedCellTag].logs.remove(at: selectedCellIndexPath.row)
+                        deleteLogInfo(log: deletedLog)
                         collectionView.reloadData()
                     }
                 }
@@ -282,7 +259,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
                 if let index = selectedObjectIndex {
                     let selectedObject = dailyLogObjects[index]
                     
-                    let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(log.color!)
+                    let colorData: NSData = NSKeyedArchiver.archivedData(withRootObject: log.color!) as NSData
                     selectedObject.setValue(log.date, forKey: "day")
                     selectedObject.setValue(log.during, forKey: "during")
                     selectedObject.setValue(log.work, forKey: "work")
@@ -312,7 +289,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         var idx = 0
         for obj in dailyLogObjects {
             let obj = obj as! WorkLogInfo
-            let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(log.color!)
+            let colorData: NSData = NSKeyedArchiver.archivedData(withRootObject: log.color!) as NSData
             if log.date == obj.day && colorData == obj.color && log.work == obj.work && log.startTime == obj.startTime && log.endTime == obj.endTime && log.during == obj.during {
                 break
             }
@@ -322,8 +299,8 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     func deleteLogInfo(log: DailyLog) {
-        let index = findIndexOfManagedObject(log)
-        context.deleteObject(dailyLogObjects[index])
+        let index = findIndexOfManagedObject(log: log)
+        context.delete(dailyLogObjects[index])
         do {
             try context.save()
         }
@@ -331,73 +308,6 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
             print(error)
         }
     }
-    
-}
-
-
-extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, LogInfoDelegate {
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dailyData[tableView.tag].logs.count //??
-    }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("LogListTableViewCell", forIndexPath: indexPath) as! LogListTableViewCell
-        
-        let DailyLog = dailyData[tableView.tag].logs[indexPath.row]
-        if let work = DailyLog.work {
-            cell.workLabel.text = work
-            if let color = DailyLog.color {
-                cell.colorLabel.backgroundColor = UIColor.clearColor()//color
-                cell.colorLabel.layer.backgroundColor = color.CGColor
-            }
-            else {
-                cell.colorLabel.text = ""
-            }
-            if let during = DailyLog.during {
-                let strTime = changeTimeFormatToShow(during)
-                cell.timeLabel.text = strTime
-            }
-            else {
-                cell.timeLabel.text = ""
-            }
-        }
-        return cell
-    }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        selectedCellTag = tableView.tag
-        selectedCellIndexPath = indexPath
-
-        // segue 호출
-        performSegueWithIdentifier("ShowDetail", sender: self)
-         //deselect
-        //tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
-    
-    // MARK: ScrollViewDelegate
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        // scroll의 위치와 collectionCell 인덱스를 비교하여, scroll이 끝났을 때 상단 날짜 업데이트하기
-        let scrollPosition = scrollView.contentOffset   // current view의 시작point
-        var idx = 0
-        
-        let visibleCells = collectionView.visibleCells()    //[0] as! basicCollectionViewCell
-        var displayedCollectionViewCell: BasicCollectionViewCell?
-        for cell in visibleCells {
-            let frame = cell.frame
-            if scrollPosition.x == frame.origin.x {
-                displayedCollectionViewCell = cell as? BasicCollectionViewCell
-                break
-            }
-            idx += 1
-        }
-        if let displayedCollectionViewCell = displayedCollectionViewCell {
-            let displayedTableView = displayedCollectionViewCell.dailyTableView
-            let date = dailyData[displayedTableView.tag].date
-            let dateTransform = NSDateFormatter.init()
-            dateTransform.dateFormat = "yyyy.MM.dd"
-            shownDateTextField.text = dateTransform.stringFromDate(date)
-        }
-    }
-    
     // MARK: LogInfoDelegate
     func writeLogInfo(date: NSDate, workName:String, startTime:String, endTime:String, during:String, color: UIColor) {
         let newLog = DailyLog.init(date: date, work: workName, startTime: startTime, endTime: endTime, during: during, color: color)
@@ -409,24 +319,26 @@ extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, U
         }
         else {
             let lastIndexDate = dailyData[lastIndex].date
-            var order = NSCalendar.currentCalendar().compareDate(date, toDate: lastIndexDate, toUnitGranularity: .Day)
-            if order == NSComparisonResult.OrderedSame {
+            var order = NSCalendar.current.compare(date as Date, to: lastIndexDate as! Date, toGranularity: .day)
+            
+            if order == ComparisonResult.orderedSame {
                 // array의 마지막 날짜가 오늘이라면 오늘 로그에 추가
                 dailyData[lastIndex].logs += [newLog]
             }
             else {
                 // array의 마지막 날짜가 오늘이 아니라면 오늘까지 추가
-                let calendar = NSCalendar.currentCalendar()
+                let calendar = NSCalendar.current
                 let offset = NSDateComponents.init()
                 var dayAfter = 1
-                while order != NSComparisonResult.OrderedSame {
-                    offset.setValue(dayAfter, forComponent: .Day)
-                    let day = calendar.dateByAddingComponents(offset, toDate: lastIndexDate, options: .MatchStrictly)
+                while order != ComparisonResult.orderedSame {
+                    offset.setValue(dayAfter, forComponent: .day)
+                    let day = calendar.date(byAdding: offset as DateComponents, to: lastIndexDate as! Date)
+                    //let day = calendar.dateByAddingComponents(offset, toDate: lastIndexDate, options: .MatchStrictly)
                     // 오늘이 되기 전까지는 계속 추가하기
-                    dailyData.append(dailyDataUnit.init(date: day!, logs: []))
+                    dailyData.append(dailyDataUnit.init(date: day! as NSDate, logs: []))
                     dayAfter += 1
                     lastIndex += 1
-                    order = NSCalendar.currentCalendar().compareDate(date, toDate: day!, toUnitGranularity: .Day)
+                    order = NSCalendar.current.compare(date as Date, to: day!, toGranularity: .day)
                 }
                 dailyData[lastIndex].logs += [newLog]
                 
@@ -436,8 +348,8 @@ extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, U
         collectionView.reloadData()
         
         // Save Into CoreData
-        let colorData: NSData = NSKeyedArchiver.archivedDataWithRootObject(color)
-        let managedObject = NSEntityDescription.insertNewObjectForEntityForName("WorkLogInfo", inManagedObjectContext: context) as NSManagedObject
+        let colorData: NSData = NSKeyedArchiver.archivedData(withRootObject: color) as NSData
+        let managedObject = NSEntityDescription.insertNewObject(forEntityName: "WorkLogInfo", into: context) as NSManagedObject
         managedObject.setValue(date, forKey: "day")
         managedObject.setValue(colorData, forKey: "color")
         managedObject.setValue(during, forKey: "during")
@@ -453,5 +365,29 @@ extension DailyListViewController: UITableViewDelegate, UITableViewDataSource, U
         }
         
         dailyLogObjects += [managedObject]
+    }
+    // MARK: ScrollViewDelegate
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        // scroll의 위치와 collectionCell 인덱스를 비교하여, scroll이 끝났을 때 상단 날짜 업데이트하기
+        let scrollPosition = scrollView.contentOffset   // current view의 시작point
+        var idx = 0
+        
+        let visibleCells = collectionView.visibleCells    //[0] as! basicCollectionViewCell
+        var displayedCollectionViewCell: BasicCollectionViewCell?
+        for cell in visibleCells {
+            let frame = cell.frame
+            if scrollPosition.x == frame.origin.x {
+                displayedCollectionViewCell = cell as? BasicCollectionViewCell
+                break
+            }
+            idx += 1
+        }
+        if let displayedCollectionViewCell = displayedCollectionViewCell {
+            let displayedTableView = displayedCollectionViewCell.dailyTableView
+            let date = dailyData[(displayedTableView?.tag)!].date
+            let dateTransform = DateFormatter.init()
+            dateTransform.dateFormat = "yyyy.MM.dd"
+            shownDateTextField.text = dateTransform.string(from: date as! Date)
+        }
     }
 }

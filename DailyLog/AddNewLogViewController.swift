@@ -26,8 +26,8 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
     
     var stopWatch = StopWatch()
     var stopWatchButtonPushed: Bool = false
-    var timer: NSTimer?
-    var dateFormatter = NSDateFormatter()
+    var timer: Timer?
+    var dateFormatter = DateFormatter()
     var strStartTime: String?
     var startDate: NSDate?
     
@@ -38,34 +38,34 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        buttonColor = UIColor.darkGrayColor()
+        buttonColor = UIColor.darkGray
         buttonColorIndex = 0
         dateFormatter.dateFormat = "h:mm:ss a"
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
+        self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let setting = NSUserDefaults.standardUserDefaults()
-        let startedTime = setting.valueForKey("startTime")
-        let text = setting.valueForKey("text")
-        let colorData = setting.valueForKey("color")
+        let setting = UserDefaults.standard
+        let startedTime = setting.value(forKey: "startTime")
+        let text = setting.value(forKey: "text")
+        let colorData = setting.value(forKey: "color")
         
         if let startTime = startedTime {
             if let text = text {
-                let infoCell = workInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! LogInfoCell
+                let infoCell = workInfoTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! LogInfoCell
                 infoCell.workText.text = text as? String
                 
                 if let colorData = colorData {
-                    let color = NSKeyedUnarchiver.unarchiveObjectWithData(colorData as! NSData)
+                    let color = NSKeyedUnarchiver.unarchiveObject(with: (colorData as! NSData) as Data)
                     infoCell.colorButton.backgroundColor = color as? UIColor
                 }
                 // stopwatch 진행
                 stopWatch.start()
                 stopWatch.startTime = startTime as? NSDate
-                strStartTime = dateFormatter.stringFromDate(stopWatch.startTime ?? NSDate())
+                strStartTime = dateFormatter.string(from: (stopWatch.startTime ?? NSDate()) as Date)
                 startDate = stopWatch.startTime
-                stopWatchButton.setTitle("중단", forState: .Normal)
+                stopWatchButton.setTitle("중단", for: .normal)
                 stopWatchButtonPushed = !stopWatchButtonPushed
             }
         }
@@ -76,13 +76,13 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
     @IBAction func pushSWButton(sender: AnyObject) {
         if stopWatchButtonPushed == false {
             // start SW
-            let infoCell = workInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! LogInfoCell
+            let infoCell = workInfoTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! LogInfoCell
             workName = infoCell.workText.text
             if workName == "" {
                 // text가 비어있으면 start버튼 눌리지 않음
                 
-                let alert = UIAlertController(title: "일정이 없어요!", message:"지금 하려는 일을 적어주세요!", preferredStyle: .Alert)
-                let action = UIAlertAction(title: "넹 :)", style: .Default, handler: { (action: UIAlertAction) in
+                let alert = UIAlertController(title: "일정이 없어요!", message:"지금 하려는 일을 적어주세요!", preferredStyle: .alert)
+                let action = UIAlertAction(title: "넹 :)", style: .default, handler: { (action: UIAlertAction) in
                     infoCell.workText.becomeFirstResponder()
                     // Main thread로 돌리는 코드
 //                    dispatch_async(dispatch_get_main_queue(), {
@@ -90,43 +90,43 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
 //                    })
                 })
                 alert.addAction(action)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
             else {
                 stopWatch.start()
                 // workName 저장(혹시 중간에 앱이 종료될 때를 대비하여)
-                let setting = NSUserDefaults.standardUserDefaults()
-                setting.setObject(workName, forKey: "text")
+                let setting = UserDefaults.standard
+                setting.set(workName, forKey: "text")
                 setting.synchronize()
                 
-                strStartTime = dateFormatter.stringFromDate(stopWatch.startTime ?? NSDate())
+                strStartTime = dateFormatter.string(from: (stopWatch.startTime ?? NSDate()) as Date)
                 startDate = stopWatch.startTime
-                stopWatchButton.setTitle("중단", forState: .Normal)
+                stopWatchButton.setTitle("중단", for: .normal)
                 stopWatchButtonPushed = !stopWatchButtonPushed
             }
         }
         else {
             // stop SW
             self.stopWatch.stop()
-            stopWatchButton.setTitle("시작", forState: .Normal)
+            stopWatchButton.setTitle("시작", for: .normal)
             stopWatchButtonPushed = !stopWatchButtonPushed
             
             passTimeData()
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             tabbarC?.selectedIndex = 0
         }
     }
     
     @IBAction func stopAddNewWork(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     
     // TextField Delegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //workText.resignFirstResponder()
-        let infoCell = workInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! LogInfoCell
+        let infoCell = workInfoTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! LogInfoCell
         infoCell.workText.resignFirstResponder()
         return true
     }
@@ -137,25 +137,25 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
     }
     
     struct StopWatch {
-        private var startTime: NSDate?
-        private var endTime: NSDate?
-        private var accumulatedTime: NSTimeInterval = 0.0
+        public var startTime: NSDate?
+        public var endTime: NSDate?
+        private var accumulatedTime: TimeInterval = 0.0
         
-        var elapsedTimeInterval: NSTimeInterval {
+        var elapsedTimeInterval: TimeInterval {
             get {
-                return accumulatedTime + NSDate().timeIntervalSinceDate(startTime ?? NSDate())
+                return accumulatedTime + NSDate().timeIntervalSince((startTime ?? NSDate()) as Date)
             }
         }
         var elapsedTimeString: String {
             get {
-                return timeIntervalToString(elapsedTimeInterval) ?? "0:00.00"
+                return timeIntervalToString(time: elapsedTimeInterval) ?? "0:00.00"
             }
         }
-        func timeIntervalToString(time: NSTimeInterval) -> String? {
-            let dateComponentsFormatter = NSDateComponentsFormatter()
-            dateComponentsFormatter.zeroFormattingBehavior = .Pad
-            dateComponentsFormatter.allowedUnits = [NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second]
-            return dateComponentsFormatter.stringFromTimeInterval(time)
+        func timeIntervalToString(time: TimeInterval) -> String? {
+            let dateComponentsFormatter = DateComponentsFormatter()
+            dateComponentsFormatter.zeroFormattingBehavior = .pad
+            dateComponentsFormatter.allowedUnits = [NSCalendar.Unit.hour, NSCalendar.Unit.minute, NSCalendar.Unit.second]
+            return dateComponentsFormatter.string(from: time)
         }
         mutating func start() {
             //startTime = nil
@@ -164,44 +164,45 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
             //self.update
             
             //앱이 도중에 꺼질 일을 대비하여 startTime 저장
-            let setting = NSUserDefaults.standardUserDefaults()
-            setting.setObject(startTime, forKey: "startTime")
+            let setting = UserDefaults.standard
+            setting.set(startTime, forKey: "startTime")
             setting.synchronize()
         }
         mutating func stop() {
-            accumulatedTime += NSDate().timeIntervalSinceDate(startTime ?? NSDate())
-            endTime = startTime?.dateByAddingTimeInterval(accumulatedTime)
+            accumulatedTime += NSDate().timeIntervalSince((startTime ?? NSDate()) as Date)
+            endTime = startTime?.addingTimeInterval(accumulatedTime)
             startTime = nil
             
             // startTime -> nil로 저장
-            let setting = NSUserDefaults.standardUserDefaults()
-            setting.setObject(startTime, forKey: "startTime")
-            setting.setObject(nil, forKey: "text")
-            setting.setObject(nil, forKey: "color")
+            let setting = UserDefaults.standard
+            setting.set(startTime, forKey: "startTime")
+            setting.set(nil, forKey: "text")
+            setting.set(nil, forKey: "color")
             setting.synchronize()
         }
     }
     
     func passTimeData() {
-        let infoCell = workInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! LogInfoCell
+        let infoCell = workInfoTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! LogInfoCell
         let text = infoCell.workText.text // workText.text
-        let endTime = dateFormatter.stringFromDate(stopWatch.endTime!)
+        let endTime = dateFormatter.string(from: stopWatch.endTime! as Date)
         let during = stopWatch.elapsedTimeString
 
-        delegate?.writeLogInfo(startDate!, workName: text!, startTime: strStartTime!, endTime: endTime, during: during, color: buttonColor)
+        delegate?.writeLogInfo(date: startDate!, workName: text!, startTime: strStartTime!, endTime: endTime, during: during, color: buttonColor)
         
         infoCell.workText.text = nil
         infoCell.resignFirstResponder()
     }
     
     // MARK: TableViewController
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cellIdentifier = "LogInfoCell"
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? LogInfoCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? LogInfoCell
             if let cell = cell {
                 cell.colorButton.backgroundColor = buttonColor
             }
@@ -209,34 +210,33 @@ class AddNewLogViewController: UIViewController, UITextFieldDelegate, UITabBarDe
         }
         else if indexPath.row == 1 {
             let cellIdentifier = "selectColor"
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
             return cell!
         }
         else {
             let cellIdentifier = "selectWork"
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
             return cell!
         }
     }
     
     // MARK: Segue
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        super.prepareForSegue(segue, sender: sender)
-        let navC = segue.destinationViewController as! UINavigationController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let navC = segue.destination as! UINavigationController
         let targetVC = navC.topViewController as! ColorSelectionTableViewController
         targetVC.selectedRow = buttonColorIndex
     }
     
     @IBAction func unwindToNewLog(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.sourceViewController as? ColorSelectionTableViewController {
+        if let sourceViewController = sender.source as? ColorSelectionTableViewController {
             if let selectedColor = sourceViewController.selectedColor {
                 buttonColor = selectedColor.color
                 buttonColorIndex = sourceViewController.selectedRow
-                let infoCell = workInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! LogInfoCell
+                let infoCell = workInfoTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! LogInfoCell
                 infoCell.colorButton.backgroundColor = buttonColor
-                let setting = NSUserDefaults.standardUserDefaults()
-                let colorData = NSKeyedArchiver.archivedDataWithRootObject(buttonColor)
-                setting.setObject(colorData, forKey: "color")
+                let setting = UserDefaults.standard
+                let colorData = NSKeyedArchiver.archivedData(withRootObject: buttonColor)
+                setting.set(colorData, forKey: "color")
                 setting.synchronize()
             }
         }
