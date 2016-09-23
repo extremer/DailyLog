@@ -207,6 +207,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath as IndexPath) as! BasicCollectionViewCell
         cell.logs = dailyData[indexPath.row].logs
+        cell.tableViewTag = indexPath.row
         return cell
     }
     
@@ -370,8 +371,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         // scroll의 위치와 collectionCell 인덱스를 비교하여, scroll이 끝났을 때 상단 날짜 업데이트하기
         let scrollPosition = scrollView.contentOffset   // current view의 시작point
-        var idx = 0
-        
+
         let visibleCells = collectionView.visibleCells    //[0] as! basicCollectionViewCell
         var displayedCollectionViewCell: BasicCollectionViewCell?
         for cell in visibleCells {
@@ -380,11 +380,9 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
                 displayedCollectionViewCell = cell as? BasicCollectionViewCell
                 break
             }
-            idx += 1
         }
         if let displayedCollectionViewCell = displayedCollectionViewCell {
-            let displayedTableView = displayedCollectionViewCell.dailyTableView
-            let date = dailyData[(displayedTableView?.tag)!].date
+            let date = dailyData[displayedCollectionViewCell.tableViewTag].date
             let dateTransform = DateFormatter.init()
             dateTransform.dateFormat = "yyyy.MM.dd"
             shownDateTextField.text = dateTransform.string(from: date as! Date)

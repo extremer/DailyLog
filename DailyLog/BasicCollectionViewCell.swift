@@ -14,10 +14,12 @@ protocol SegueDelegate {
 
 class BasicCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var dailyTableView: UITableView!
+    var tableViewTag: Int!
     var logs: [DailyLog]!
     var delegate: SegueDelegate?
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView.tag = tableViewTag
         return logs.count
         //return dailyData[tableView.tag].logs.count //??
     }
