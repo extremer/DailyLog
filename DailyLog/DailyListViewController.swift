@@ -38,14 +38,11 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
-        
+
 //        let newVC = tabBarController?.viewControllers![1] as! AddNewLogViewController
 //        newVC.delegate = self
 //        newVC.tabbarC = self.tabBarController!
         
-        // DailyData를 CoreData에 저장해야함 
-        // var date: NSDate!
-        // var logs: [DailyLog]
         var dailyLogs = [DailyLog]()
         context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         entity = NSEntityDescription.entity(forEntityName: "WorkLogInfo", in: context)
@@ -66,15 +63,15 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
 
         dailyData = bindingLogsDaily(logs: dailyLogs)
         dailyLogs.removeAll()
-        
-       // collectionView.reloadData()
     }
+    // viewWillApear, viewDidLayoutSubview다시공부하기 
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         collectionView.reloadData()
         if firstViewLayout == false {
             let numbOfItems = collectionView.numberOfItems(inSection: 0)
+            
             view.layoutIfNeeded()
             if numbOfItems != 0 {
                 let scrollIndex = IndexPath.init(row: numbOfItems-1, section: 0)
@@ -84,7 +81,6 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
             dateTransform.dateFormat = "yyyy.MM.dd"
             let date = NSDate()
             shownDateTextField.text = dateTransform.string(from: date as Date)
-            
             firstViewLayout = true
         }
         if newItemAdded == true {
@@ -94,7 +90,7 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
             collectionView.scrollToItem(at: scrollIndex, at: UICollectionViewScrollPosition.right, animated: false)
             newItemAdded = false
         }
-        //LogListTableView.reloadData()
+        collectionView.layoutIfNeeded()
     }
     
     // MARK: Function

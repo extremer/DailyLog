@@ -49,6 +49,7 @@ class BasicCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // segue 호출
+        tableView.deselectRow(at: indexPath, animated: true)
         delegate?.performSegueWith(ID: "ShowDetail", selectedTag: tableViewTag, selectedIndexPath: indexPath)
     }
     

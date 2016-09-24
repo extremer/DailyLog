@@ -142,7 +142,7 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 && indexPath.row == 0 {
             // textView height에 따라 바뀜 
-             return eventNameTextView.frame.height
+             return eventNameTextView.frame.height + 0.3
         } else if startPickerHidden && indexPath.section == 1 && indexPath.row == 1 {
             return 0
         } else if endPickerHidden && indexPath.section == 1 && indexPath.row == 3 {
@@ -162,14 +162,10 @@ class LogDatailTableViewController: UITableViewController, UITextViewDelegate {
         if newFrame.height != textView.frame.height {
             
             textView.frame = newFrame
-  //          textView.layoutIfNeeded()
             textView.updateConstraints()
-            textView.sizeToFit()
-            tableView.beginUpdates()
-            tableView.endUpdates()
 
-   //     tableView.reloadData()
-          //  textView.becomeFirstResponder()
+        tableView.reloadData()
+        textView.becomeFirstResponder()
         }
     }
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

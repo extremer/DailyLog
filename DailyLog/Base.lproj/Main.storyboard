@@ -281,7 +281,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="c9K-72-KE9">
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <prototypes>
                                                         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogListTableViewCell" id="Kha-me-dRK" customClass="LogListTableViewCell" customModule="DailyLog" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="28" width="333" height="44"/>
@@ -350,6 +350,7 @@
                                                 </tableView>
                                             </subviews>
                                         </view>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="c9K-72-KE9" firstAttribute="top" secondItem="M0d-iz-nkJ" secondAttribute="top" id="Ilb-jT-TMt"/>
                                             <constraint firstAttribute="trailing" secondItem="c9K-72-KE9" secondAttribute="trailing" id="Oi1-iQ-cga"/>
@@ -375,15 +376,15 @@
                             <constraint firstItem="FRd-wd-hEA" firstAttribute="top" secondItem="5vE-Q6-jga" secondAttribute="bottom" constant="30" id="SCa-oJ-ZUD"/>
                             <constraint firstItem="h5N-v5-sPE" firstAttribute="centerX" secondItem="g2L-mb-jel" secondAttribute="centerX" id="VMD-jF-Beg"/>
                             <constraint firstItem="FRd-wd-hEA" firstAttribute="leading" secondItem="g2L-mb-jel" secondAttribute="leading" id="Yb8-CV-c1a"/>
-                            <constraint firstItem="FRd-wd-hEA" firstAttribute="top" secondItem="h5N-v5-sPE" secondAttribute="bottom" constant="10" id="k9w-ur-UKb"/>
+                            <constraint firstItem="FRd-wd-hEA" firstAttribute="top" secondItem="5vE-Q6-jga" secondAttribute="bottom" constant="45" id="uo2-RD-rtE"/>
                             <constraint firstItem="h5N-v5-sPE" firstAttribute="top" secondItem="5vE-Q6-jga" secondAttribute="bottom" id="wkk-qs-1pp"/>
                             <constraint firstItem="h5N-v5-sPE" firstAttribute="top" secondItem="g2L-mb-jel" secondAttribute="topMargin" constant="20" id="xYA-To-H4C"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="xYA-To-H4C"/>
                                 <exclude reference="HjT-NH-nmc"/>
                                 <exclude reference="SCa-oJ-ZUD"/>
-                                <exclude reference="xYA-To-H4C"/>
                             </mask>
                         </variation>
                     </view>
@@ -432,9 +433,8 @@
                                                         <segue destination="CD0-Gs-n1E" kind="show" identifier="SelectColor" id="fLB-mc-6yA"/>
                                                     </connections>
                                                 </button>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="event name" translatesAutoresizingMaskIntoConstraints="NO" id="vGm-3X-3br">
-                                                    <frame key="frameInset" minX="49" minY="-0.5" width="318" height="44"/>
-                                                    <color key="backgroundColor" red="0.79760522710000004" green="1" blue="0.7220710468" alpha="1" colorSpace="calibratedRGB"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="event name" translatesAutoresizingMaskIntoConstraints="NO" id="vGm-3X-3br">
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
