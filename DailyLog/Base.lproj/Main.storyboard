@@ -314,20 +314,18 @@
                                                                         <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="work name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hrT-mc-2Cz">
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="22" id="g8x-OW-RVD"/>
-                                                                        </constraints>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="work name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hrT-mc-2Cz">
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
                                                                 <constraints>
+                                                                    <constraint firstAttribute="bottom" secondItem="hrT-mc-2Cz" secondAttribute="bottom" constant="4" id="2Gu-37-yQz"/>
                                                                     <constraint firstItem="hrT-mc-2Cz" firstAttribute="centerY" secondItem="U5A-ou-NVZ" secondAttribute="centerY" id="3Ny-A8-i1n"/>
                                                                     <constraint firstItem="hrT-mc-2Cz" firstAttribute="leading" secondItem="uA5-Eq-IK8" secondAttribute="trailing" constant="8" symbolic="YES" id="FSp-3F-PEL"/>
-                                                                    <constraint firstItem="uA5-Eq-IK8" firstAttribute="baseline" secondItem="hrT-mc-2Cz" secondAttribute="baseline" id="GFK-lG-8yA"/>
                                                                     <constraint firstItem="mn3-Ji-kIm" firstAttribute="centerY" secondItem="uA5-Eq-IK8" secondAttribute="centerY" id="Kar-l1-QWf"/>
+                                                                    <constraint firstItem="hrT-mc-2Cz" firstAttribute="top" secondItem="U5A-ou-NVZ" secondAttribute="top" constant="4" id="Vb5-1b-hwz"/>
                                                                     <constraint firstItem="mn3-Ji-kIm" firstAttribute="baseline" secondItem="uA5-Eq-IK8" secondAttribute="baseline" id="YN6-Nh-SHO"/>
                                                                     <constraint firstAttribute="trailingMargin" secondItem="hrT-mc-2Cz" secondAttribute="trailing" constant="14" id="bwG-eJ-Bec"/>
                                                                     <constraint firstItem="uA5-Eq-IK8" firstAttribute="leading" secondItem="mn3-Ji-kIm" secondAttribute="trailing" constant="8" symbolic="YES" id="fEL-gQ-wEe"/>

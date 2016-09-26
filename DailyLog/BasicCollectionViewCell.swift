@@ -21,8 +21,8 @@ class BasicCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         tableView.tag = tableViewTag
         return logs.count
-        //return dailyData[tableView.tag].logs.count //??
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LogListTableViewCell", for: indexPath as IndexPath) as! LogListTableViewCell
         
@@ -46,7 +46,9 @@ class BasicCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITabl
         }
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // segue 호출
         tableView.deselectRow(at: indexPath, animated: true)

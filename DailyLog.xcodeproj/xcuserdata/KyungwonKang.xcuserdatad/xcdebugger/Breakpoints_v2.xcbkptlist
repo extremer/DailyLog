@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DailyLog/DailyListViewController.swift"
-            timestampString = "496330363.319433"
+            timestampString = "496388226.908273"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "348"
-            endingLineNumber = "348"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
             landmarkName = "writeLogInfo(date:workName:startTime:endTime:during:color:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DailyLog/DailyListViewController.swift"
-            timestampString = "496330363.319433"
+            timestampString = "496388226.908273"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
+            startingLineNumber = "321"
+            endingLineNumber = "321"
             landmarkName = "writeLogInfo(date:workName:startTime:endTime:during:color:)"
             landmarkType = "7">
          </BreakpointContent>

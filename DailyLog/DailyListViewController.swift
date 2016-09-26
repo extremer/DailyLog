@@ -203,9 +203,13 @@ class DailyListViewController: UIViewController, UICollectionViewDataSource, UIC
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath as IndexPath) as! BasicCollectionViewCell
         cell.logs = dailyData[indexPath.row].logs
         cell.tableViewTag = indexPath.row
+        
+        cell.dailyTableView.estimatedRowHeight = 150
+        cell.dailyTableView.rowHeight = UITableViewAutomaticDimension
+        cell.dailyTableView.tableFooterView = UIView()
         cell.delegate = self
         cell.dailyTableView.reloadData()
-
+        
         return cell
     }
     
